@@ -14,7 +14,8 @@
             <td>{{=row.time_stamp}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
-            <td><img src="/Trading_App/uploads/args=row.image" /></td>
+            <td><img width="5px"
+     src="{{=URL('download', args=row.image)}}" /></td>
         </tr>
         {{pass}}
     </table>
