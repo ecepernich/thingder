@@ -28,8 +28,12 @@ response.menu = [
     (T('Home'), False, URL('default', 'index'), []),
     (T('Create Post'), False, URL('default', 'create'), []),
     (T('Login'), False, URL('default', 'login'), []),
-    (T('Manage Posts'), False, URL('default', 'manage'), []),
+    (T('My Profile'), False, URL('default', 'my_profile'), []),
+    
 ]
+if auth.has_membership('managers'):
+    response.menu.append((T('Manage Posts'), False, URL('default', 'manage')))
+
 
 DEVELOPMENT_MENU = True
 

@@ -16,12 +16,11 @@ def index():
         #redirect(URL('other', vars={ 'your_name':form.vars.your_name}))
     return locals()
 
-#@auth.requires_login()
+@auth.requires_login()
 def create():
-    db.posts.time_stamp.default = request.now
-    db.posts.time_stamp.writable = False
-    db.posts.time_stamp.readable = False
+    db.posts.User_ID.default = auth.user.id
     form = SQLFORM(db.posts).process()
+    db.posts.User_ID.readable = False
     if form.accepted: redirect(URL('index'))
     return locals()
 
@@ -29,7 +28,28 @@ def show():
     post = db.posts(request.args(0, cast=int))
     return locals()
 
-#@auth.requires_membership('managers')
+def messaging():
+    userID = request.args(0, cast=int)
+    db.messages.User_ID2.default = userID
+    #db.messages.User_ID2.readable = False
+    db.messages.User_ID2.writable = False
+    
+    rows = db(db.messages.User_ID2==auth.user.id).select()
+    
+    
+    form3 = SQLFORM(db.messages).process()
+    return locals()
+    if form3.accepted:
+        redirect('messaging')
+        
+def my_profile():
+    name = auth.user.first_name
+    rows = db(db.posts.User_ID==auth.user.id).select()
+    
+    return locals()
+    
+
+@auth.requires_membership('managers')
 def manage():
     grid = SQLFORM.grid(db.posts)
     return locals()
