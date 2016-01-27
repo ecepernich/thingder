@@ -5,8 +5,8 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('Trading App'),XML('&trade;&nbsp;'),
-                  _class="navbar-brand",_href="http://www.web2py.com/",
+response.logo = A(B('Thingder'),XML('&trade;&nbsp;'),
+                  _class="navbar-brand",_href="http://127.0.0.1/Trading_App/",
                   _id="web2py-logo")
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
@@ -47,7 +47,6 @@ def _():
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        (T('My Sites'), False, URL('admin', 'default', 'site')),
           (T('This App'), False, '#', [
               (T('Design'), False, URL('admin', 'default', 'design/%s' % app)),
               LI(_class="divider"),
@@ -77,30 +76,7 @@ def _():
                'admin', 'default', 'errors/' + app)),
               (T('About'), False, URL(
                'admin', 'default', 'about/' + app)),
-              ]),
-          ('web2py.com', False, '#', [
-             (T('Download'), False,
-              'http://www.web2py.com/examples/default/download'),
-             (T('Support'), False,
-              'http://www.web2py.com/examples/default/support'),
-             (T('Demo'), False, 'http://web2py.com/demo_admin'),
-             (T('Quick Examples'), False,
-              'http://web2py.com/examples/default/examples'),
-             (T('FAQ'), False, 'http://web2py.com/AlterEgo'),
-             (T('Videos'), False,
-              'http://www.web2py.com/examples/default/videos/'),
-             (T('Free Applications'),
-              False, 'http://web2py.com/appliances'),
-             (T('Plugins'), False, 'http://web2py.com/plugins'),
-             (T('Recipes'), False, 'http://web2pyslices.com/'),
-             ]),
-          (T('Community'), False, None, [
-             (T('Groups'), False,
-              'http://www.web2py.com/examples/default/usergroups'),
-              (T('Twitter'), False, 'http://twitter.com/web2py'),
-              (T('Live Chat'), False,
-               'http://webchat.freenode.net/?channels=web2py'),
-              ]),
+              ])
         ]
 if DEVELOPMENT_MENU: _()
 
