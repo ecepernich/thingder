@@ -10,7 +10,7 @@
         {{for row in rows:}}
         <tr>
             <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
-            <td>{{=row.created_by.email}}</td>
+            <td>{{=row.created_by.first_name}}</td>
             <td>{{=row.created_on}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
