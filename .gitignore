@@ -1,0 +1,9 @@
+*.log
+*.DS_Store
+*.DS_Store?
+cache
+databases
+errors
+sessions
+.mo
+.mr.developer.cfg
