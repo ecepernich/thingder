@@ -1,11 +1,20 @@
 {{extend 'layout.html'}}
 
 
-
 <html>
    <h2>Welcome to Thingder!</h2>
     <br>
-    <h3>Item posts</h3>
+    <h3>Current Postings</h3>
+    <div class="card-container">
+        {{for row in rows:}}
+        <div class="card">
+            <div class="front">
+                <img height="225" width="225" src="{{=URL('download', args=row.image)}}"/>
+            </div>
+        </div>
+        {{pass}}
+    </div>
+    <!--
     <table class="table">
         {{for row in rows:}}
         <tr>
@@ -19,5 +28,6 @@
         </tr>
         {{pass}}
     </table>
+    -->
     
 </html>
