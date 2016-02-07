@@ -33,7 +33,7 @@
         <div id="radioButtonContainerId">
     <fieldset class="rating">     
         <tr data-id="{{=post.created_by}}">
-        <input data-id="{{=post.created_by}}" onclick="loadDoc()" type="radio" name="stars" id="4_stars" value="4" >
+        <input data-id="{{=post.created_by}}" type="radio" name="stars" id="4_stars" value="4" >
         <label class="stars" for="4_stars">4 stars</label>
         <input data-id="{{=post.created_by}}" type="radio" name="stars" id="3_stars" value="3" >
         <label class="stars" for="3_stars">3 stars</label>
@@ -63,7 +63,9 @@
     
     function do_ajax_vote(t, rating){
         var id =jQuery(t).attr('data-id');
-        alert('clicked');
+        jQuery.ajax({method:'post', url:'{{=URL('../rating_callback')}}',
+                     data:{'rate':rating, 'user':id},
+                    success: function(data){alert(data);} });
     }
     $(document).ready(function() {
         $('#radioButtonContainerId input:radio').click(function() {

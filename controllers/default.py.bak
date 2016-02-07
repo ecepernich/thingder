@@ -27,7 +27,7 @@ def create():
         rows = db(db.rating.User_ID==auth.user.id).select()
         
         if(not rows):
-            db.rating.insert(User_ID=auth.user.id, rating=0, Rcount=0)
+            db.rating.insert(User_ID=auth.user.id, rating=0, Rcount=0, score=0)
             
         redirect(URL('index'))
         
@@ -68,18 +68,19 @@ def manage():
     return locals()
 
 def rating_callback():
-    vars = request.get_vars
+    vars = request.post_vars
     print vars
     
     if vars:
         user = vars.user
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
-        
+        print rate
         if Rating:
             
             Rating.update_record(Rcount=Rating.Rcount+ 1)
-            Rating.update_record(rating=(rate + Rating.rating)/Rating.Rcount)
+            Rating.update_record(score=Rating.score+rate)
+            Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             
 
 
