@@ -98,6 +98,6 @@ def call():
     return service()
 
 def item():
-    rows = db(db.posts).select()
-    post = db.posts(request.args(0, cast=int))
+    rows = db(db.posts.id != request.args(0,cast=int)).select()
+    curr_item = db.posts(request.args(0,cast=int))
     return locals()
