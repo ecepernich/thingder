@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('Thingder'),XML('&trade;&nbsp;'),
-                  _class="navbar-brand",_href="http://127.0.0.1:8000/thingder/",
+                  _class="navbar-brand",_href="http://127.0.0.1:8000/Trading_App/",
                   _id="web2py-logo")
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
@@ -29,6 +29,7 @@ response.menu = [
     (T('Create Post'), False, URL('default', 'create'), []),
     (T('Login'), False, URL('default', 'login'), []),
     (T('My Profile'), False, URL('default', 'my_profile'), []),
+    
     
 ]
 if auth.has_membership('managers'):

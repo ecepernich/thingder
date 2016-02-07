@@ -12,3 +12,8 @@ db.define_table('messages',
                 Field('body', 'text'),
                 Field('User_ID2'),
                 auth.signature)
+db.define_table('rating',
+                Field('User_ID', 'reference auth_user'),
+                Field('Rcount', 'float'),
+                Field('rating', 'float'))
+db.rating.Rcount.default = 1;
