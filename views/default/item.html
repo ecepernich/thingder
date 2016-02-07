@@ -1,16 +1,23 @@
 {{extend 'layout.html'}}
+<h1>
+    Your Item
+</h1>
+<br>
+<ul>
+    <li>Interests:</li>
+    <li>Offers: </li>
+</ul>
+<br>
+<h1>
+    Trade Match
+</h1>
 
-
-<html>
-   <h2>Welcome to Thingder!</h2>
-    <br>
-    <h3>Current Postings</h3>
-    <div class="card-container">
+<div class="card-container">
         {{for row in rows:}}
         <div class="card">
             <div class="front">
                 <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
-            </div>
+             </div>
         </div>
-        {{pass}}
-    </div>
+      {{pass}}
+ </div>
