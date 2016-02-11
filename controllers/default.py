@@ -35,10 +35,13 @@ def create():
 
 def show():
     post = db.posts(request.args(0, cast=int))
+    voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==post.created_by)).select()
+    
     return locals()
 
 def showByCategory():
     var1 = request.vars.filter1
+    rows = db(db.posts.category==var1).select()
     
     return locals()
 
@@ -69,19 +72,29 @@ def manage():
 
 def rating_callback():
     vars = request.post_vars
-    print vars
+    voted = False
     
     if vars:
+        #make another table tracking who voted for who; then in the conditional check to see if the current user already has a vote logged for the user
         user = vars.user
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
-        print rate
-        if Rating:
+        
+        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()[0]
+        if voter:
+            score = voter.score
+            Rating.update_record(score=Rating.score-score)
+            Rating.update_record(score=Rating.score+rate)
+            Rating.update_record(rating=((Rating.score)/Rating.Rcount))
+            voter.update_record(score = rate)
+            response.flash="You changed your vote"
+            
+        elif Rating:
             
             Rating.update_record(Rcount=Rating.Rcount+ 1)
             Rating.update_record(score=Rating.score+rate)
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
-            
+            db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
 
 
 def testCss():
