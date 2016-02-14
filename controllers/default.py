@@ -9,7 +9,6 @@
 #########################################################################
 
 def index():
-    
     rows = db(db.posts).select()
 
     #if form.accepted:
@@ -40,19 +39,17 @@ def messaging():
     db.messages.User_ID2.writable = False
     
     rows = db(db.messages.User_ID2==auth.user.id).select()
-    
-    
+
     form3 = SQLFORM(db.messages).process()
     return locals()
     if form3.accepted:
         redirect('messaging')
-        
+
+@auth.requires_login()
 def my_profile():
     name = auth.user.first_name
     rows = db(db.posts.User_ID==auth.user.id).select()
-    
     return locals()
-    
 
 @auth.requires_membership('managers')
 def manage():
@@ -104,3 +101,8 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+def item():
+    rows = db(db.posts.id != request.args(0,cast=int)).select()
+    curr_item = db.posts(request.args(0,cast=int))
+    return locals()
