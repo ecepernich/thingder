@@ -28,6 +28,11 @@ def show():
     post = db.posts(request.args(0, cast=int))
     return locals()
 
+def item():
+    curr_item = db.posts(request.args(0,cast=int)) or redirect(URL('index'))
+    rows = db(db.posts.id != request.args(0,cast=int)).select()
+    return locals()
+
 def messaging():
     userID = request.args(0, cast=int)
     db.messages.User_ID2.default = userID

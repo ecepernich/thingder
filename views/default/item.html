@@ -1,0 +1,24 @@
+{{extend 'layout.html'}}
+<h1>
+    Your Item: {{=curr_item.title}}
+</h1>
+<img src="{{=URL('download', args=curr_item.image)}}"></img>
+<br>
+<ul>
+    <li>Interests: {{=curr_item.interests}}</li>
+    <li>Offers: </li>
+</ul>
+<br>
+<h1>
+    Trade Match
+</h1>
+
+<div class="card-container">
+        {{for row in rows:}}
+        <div class="card">
+            <div class="front">
+                <a href="{{=URL('item',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
+             </div>
+        </div>
+      {{pass}}
+ </div>
