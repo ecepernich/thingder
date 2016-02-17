@@ -56,25 +56,9 @@ I00
 sg10
 S'string'
 p19
-ssS'rater'
+ssS'id'
 p20
 (dp21
-g4
-I512
-sg5
-I00
-sg6
-I2
-sg7
-S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p22
-sg9
-I00
-sg10
-g15
-ssS'id'
-p23
-(dp24
 g4
 I512
 sg5
@@ -83,10 +67,26 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p25
+p22
 sg9
 I00
 sg10
 S'id'
+p23
+ssS'rater'
+p24
+(dp25
+g4
+I512
+sg5
+I00
+sg6
+I2
+sg7
+S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
 p26
+sg9
+I00
+sg10
+g15
 ss.
