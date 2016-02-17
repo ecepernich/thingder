@@ -17,33 +17,49 @@ def index():
 
 @auth.requires_login()
 def create():
+    
     db.posts.User_ID.default = auth.user.id
     form = SQLFORM(db.posts).process()
     db.posts.User_ID.readable = False
-    if form.accepted: redirect(URL('index'))
+    if form.accepted: 
+        
+        rows = db(db.rating.User_ID==auth.user.id).select()
+        
+        if(not rows):
+            db.rating.insert(User_ID=auth.user.id, rating=0, Rcount=0, score=0)
+            
+        redirect(URL('index'))
+        
     return locals()
 
 def show():
     post = db.posts(request.args(0, cast=int))
+    voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==post.created_by)).select()
+    
     return locals()
+
 
 def item():
     curr_item = db.posts(request.args(0,cast=int)) or redirect(URL('index'))
     rows = db(db.posts.id != request.args(0,cast=int)).select()
     return locals()
 
+
+def showByCategory():
+    var1 = request.vars.filter1
+    rows = db(db.posts.category==var1).select()
+    
+    return locals()
+
+@auth.requires_login()
 def messaging():
-    userID = request.args(0, cast=int)
-    db.messages.User_ID2.default = userID
-    #db.messages.User_ID2.readable = False
-    db.messages.User_ID2.writable = False
     
     rows = db(db.messages.User_ID2==auth.user.id).select()
-
     form3 = SQLFORM(db.messages).process()
-    return locals()
+    
     if form3.accepted:
         redirect('messaging')
+    return locals()    
 
 @auth.requires_login()
 def my_profile():
@@ -54,6 +70,37 @@ def my_profile():
 @auth.requires_membership('managers')
 def manage():
     grid = SQLFORM.grid(db.posts)
+    return locals()
+
+def rating_callback():
+    vars = request.post_vars
+    voted = False
+    
+    if vars:
+        #make another table tracking who voted for who; then in the conditional check to see if the current user already has a vote logged for the user
+        user = vars.user
+        rate = (float (vars.rate))
+        Rating = db(db.rating.User_ID==user).select()[0]
+        
+        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()[0]
+        if voter:
+            score = voter.score
+            Rating.update_record(score=Rating.score-score)
+            Rating.update_record(score=Rating.score+rate)
+            Rating.update_record(rating=((Rating.score)/Rating.Rcount))
+            voter.update_record(score = rate)
+            response.flash="You changed your vote"
+            
+        elif Rating:
+            
+            Rating.update_record(Rcount=Rating.Rcount+ 1)
+            Rating.update_record(score=Rating.score+rate)
+            Rating.update_record(rating=((Rating.score)/Rating.Rcount))
+            db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
+
+
+def testCss():
+    
     return locals()
 
 def login():

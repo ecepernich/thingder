@@ -1,5 +1,12 @@
 {{extend 'layout.html'}}
-
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rating</title>
+    <link rel='stylesheet' type='text/css' href='../static/css/style.css'>
+</head>
+ 
+    
 <h2>{{=post.created_by.first_name}}'s profile</h2>
 <i>Posted on {{=post.created_on}} by {{=post.created_by.first_name}}</i>
 <br>
@@ -16,9 +23,69 @@
     </h4>
 {{=post.offers}}
 </li>
+<body>
+    
+    <div class="well">
+        <!-- add conditional python to control which star is checked; pull rating from database -->
+    <p>{{if voter:}} vote again {{else:}} rate this user {{pass}}</p>
+        
+           
+        
+    </div>
+    
+    <form action='../rating_callback' method="post">
+        <div id="radioButtonContainerId">
+    <fieldset class="rating">     
+        <tr data-id="{{=post.created_by}}">
+        <input data-id="{{=post.created_by}}" type="radio" name="stars" id="4_stars" value="4" >
+        <label class="stars" for="4_stars">4 stars</label>
+        <input data-id="{{=post.created_by}}" type="radio" name="stars" id="3_stars" value="3" >
+        <label class="stars" for="3_stars">3 stars</label>
+        <input data-id="{{=post.created_by}}" type="radio" name="stars" id="2_stars" value="2" >
+        <label class="stars" for="2_stars">2 stars</label>
+        <input data-id="{{=post.created_by}}" type="radio" name="stars" id="1_stars" value="1" >
+        <label class="stars" for="1_stars">1 star</label>
+        <input data-id="{{=post.created_by}}" type="radio" name="stars" id="0_stars" value="0" required>
+        <label class="stars" for="0_stars">0 star</label>
+        <span  class="label"> Rating: </span>
+        </tr>
+        </div>
+    </fieldset>
+        </tr>
+    
+    </form>
+</body>
+</html>
 <form enctype="multipart/form-data" action="{{=URL('messaging',args=post.User_ID)}}">
     <input type="submit" value="message {{=post.created_by.first_name}}"/>
     
-    
-
 </form>
+    </body>
+</html>
+
+<script>
+    
+    function do_ajax_vote(t, rating){
+        var id =jQuery(t).attr('data-id');
+        jQuery.ajax({method:'post', url:'{{=URL('../rating_callback')}}',
+                     data:{'rate':rating, 'user':id},
+                    success: function(data){} });
+    }
+    $(document).ready(function() {
+        $('#radioButtonContainerId input:radio').click(function() {
+    if ($(this).val() === '4') {
+      do_ajax_vote(this, '5');
+    } if ($(this).val() === '3') {
+      do_ajax_vote(this, '4');
+    } if ($(this).val() === '2'){
+      do_ajax_vote(this, '3');
+    }
+            if ($(this).val() === '1'){
+      do_ajax_vote(this, '2');
+    }
+            if ($(this).val() === '0'){
+      do_ajax_vote(this, '1');
+    }
+  });
+    });
+</script>

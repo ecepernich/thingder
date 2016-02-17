@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+<h1>This is the default/showByCategory.html template</h1>
+{{=BEAUTIFY(response._vars)}}
+{{=var1}}
+<table class="table">
+        {{for row in rows:}}
+        <tr>
+            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
+            <td>{{=row.created_by.first_name}}</td>
+            <td>{{=row.created_on}}</td>
+            <td>{{=row.interests}}</td>
+            <td>{{=row.offers}}</td>
+            <td><img width="100px"
+     src="{{=URL('download', args=row.image)}}" /></td>
+        </tr>
+        {{pass}}
+    </table>
