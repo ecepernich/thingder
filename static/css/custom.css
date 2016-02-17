@@ -1,12 +1,6 @@
 *{
     font-family: 'Raleway', sans-serif !important;
-    font-weight: 900 !important;
-}
-
-body {
-    #background-color: #fa7414;
-    background-color: #ececec;
-    color: #000000;
+    font-weight: 400 !important;
 }
 
 .navbar-custom {
@@ -16,7 +10,7 @@ body {
 }
   
 .navbar-custom .navbar-nav > li > a {
-  	color:#000;
+  	color:#000000;
   	padding-left:20px;
   	padding-right:20px;
 }
