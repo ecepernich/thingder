@@ -1,8 +1,13 @@
-body {
-    background-color: #f67709;
+*{
+    font-family: 'Raleway', sans-serif !important;
+    font-weight: 900 !important;
 }
 
-
+body {
+    #background-color: #fa7414;
+    background-color: #111111;
+    color: #c6cecc;
+}
 
 .nav {
     background-color: #111111;
