@@ -10,3 +10,4 @@ sessions
 *.bak
 Thumbs.db
 *.table
+uploads/*

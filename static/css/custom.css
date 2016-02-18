@@ -67,3 +67,12 @@ img {
 .navbar-custom .icon-bar {
   	background-color:#33aa33;
 }
+
+#card {   
+    margin: 10px 0px 10px 0px;
+    padding: 5px 10px 5px 10px;
+    background-color: #cfcfcf;
+    border: 4px solid green;
+    border-radius: 5px;
+    display: inline-block;
+}
