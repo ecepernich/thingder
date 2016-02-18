@@ -98,8 +98,9 @@ def rating_callback():
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
         
-        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()[0]
+        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()
         if voter:
+            voter = voter[0]
             score = voter.score
             Rating.update_record(score=Rating.score-score)
             Rating.update_record(score=Rating.score+rate)
@@ -107,13 +108,13 @@ def rating_callback():
             voter.update_record(score = rate)
             response.flash="You changed your vote"
             
-        elif Rating:
+        else:
             
             Rating.update_record(Rcount=Rating.Rcount+ 1)
             Rating.update_record(score=Rating.score+rate)
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
-
+            response.flash="new vote"
 
 def testCss():
     
