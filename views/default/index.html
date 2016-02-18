@@ -14,6 +14,7 @@
             <input type="submit" value="filter">
         </select>
     </form>
+    <!--
     <table class="table">
         {{for row in rows:}}
         <tr>
@@ -27,5 +28,21 @@
         </tr>
         {{pass}}
     </table>
-    
+    -->
+    <div class="container-fluid">
+        <div class="row">
+        {{for row in rows:}}
+                <div class="col-md-3">
+                    <div id="card">
+                        <a href="{{URL('show', args=row.id)}}">{{=row.title}}</a>
+                        <p>Created by: {{=row.created_by.first_name}}</p>
+                        <p>Created on: {{=row.created_on}}</p>
+                        <p>Interested in: {{=row.interests}}</p>
+                        <p>Offering: {{row.offers}}</p>
+                        <img vertical-align="" width="100%" height="260px" src="{{=URL('download', args=row.image)}}"/>
+                    </div>
+                </div>
+        {{pass}}
+        </div>
+    </div>
 </html>
