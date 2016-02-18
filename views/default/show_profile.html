@@ -1,10 +1,7 @@
 {{extend 'layout.html'}}
-<h1>{{=fname}} {{=lname}}</h1>
-<form enctype="multipart/form-data" action="{{=URL('profile')}}">
-    <input type="submit" value="edit your profile here!"/> 
-</form>
-<h1></h1>
-<h1></h1>
+<h1>{{=thing.first_name}} {{=thing.last_name}}</h1>
+<h3></h3>
+<h3></h3>
 {{for info in infos:}}
         <tr>
             <td><img width="200px"
@@ -15,13 +12,11 @@
             <h3></h3>
             <td>Zip Code: {{=info.zip_code}}</td>
             <h3></h3>
-            <td>About {{=fname}}: {{=info.about_me}}</td>
+            <td>About {{=thing.first_name}}: {{=info.about_me}}</td>
             <h3></h3>
             
         {{pass}}
 
-<h1></h1>
-<h1></h1>
 <h3>Recent Posts</h3>
  <table class="table">
         {{for row in rows:}}

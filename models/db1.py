@@ -25,3 +25,13 @@ db.define_table('votes',
                 Field('Ratee','reference auth_user'),
                 Field('Vtype'),
                 Field('score','float'))
+
+db.define_table('profile',
+                Field('User_ID','reference auth_user'),
+                Field('image','upload',default='defaultprofile.png'),
+                Field('zip_code'),
+                Field('age','integer'),
+                Field('about_me','text'),
+                Field('extrafield'))
+db.profile.zip_code.requires = IS_MATCH('^\d{5}(-\d{4})?$',
+         error_message='not a zip code')

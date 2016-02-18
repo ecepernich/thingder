@@ -61,25 +61,32 @@ def messaging():
 def my_profile():
     fname = auth.user.first_name
     lname = auth.user.last_name
-    infos = db(db.profile.User_ID==auth.user.id).select()
-    rows = db(db.posts.User_ID==auth.user.id).select()
+    rows = db(db.profile.User_ID==auth.user.id).select()
+    ##rows = db(db.profile.User_ID==auth.user.id).select()
+    zc = auth.user.id
     
     return locals()
 
-
-def show_profile():
-    x = request.args[0]
-    #x=1
-    infos = db(db.profile.User_ID==x).select()
-    rows = db(db.posts.User_ID==x).select()
-    thing = db.auth_user(id=x)
-    
-    return locals()
 
 @auth.requires_login()
+def show_profile():
+    auth.user.id=1
+    x=1 #get user id as arg from post
+    fname = auth.user.first_name #get fname of id #
+    lname = auth.user.last_name #get lname of id#
+    zc = auth.user.id #test
+    em = auth.user.email
+    ##rows = db(db.profile.User_ID==1).select()
+    rows = db(db.posts.User_ID==auth.user.id).select()
+    
+    
+    return locals()
+
 def profile():
     
+    #db.profile.User_ID = auth.user.id
     form = SQLFORM(db.profile).process()
+    #db.profile.id.readable = False
     
     return locals()
 
