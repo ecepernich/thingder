@@ -9,3 +9,4 @@ sessions
 .mr.developer.cfg
 *.bak
 Thumbs.db
+*.table
