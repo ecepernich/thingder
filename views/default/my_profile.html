@@ -1,17 +1,40 @@
 {{extend 'layout.html'}}
-<h1>{{=name}}</h1>
-<h3>
-    Your Items
-</h3>
-<table class="table">
+<h1>{{=fname}} {{=lname}}</h1>
+<form enctype="multipart/form-data" action="{{=URL('profile')}}">
+    <input type="submit" value="edit your profile here!"/> 
+</form>
+<h1></h1>
+<h1></h1>
+{{for info in infos:}}
+        <tr>
+            <td><img width="200px"
+     src="{{=URL('download', args=info.image)}}" /></td>
+        </tr>
+            <h3></h3>
+            <td>Age: {{=info.age}}</td>
+            <h3></h3>
+            <td>Zip Code: {{=info.zip_code}}</td>
+            <h3></h3>
+            <td>About {{=fname}}: {{=info.about_me}}</td>
+            <h3></h3>
+            
+        {{pass}}
+
+<h1></h1>
+<h1></h1>
+<h3>Recent Posts</h3>
+ <table class="table">
         {{for row in rows:}}
         <tr>
-            <td><a href="{{=URL('item',args=row.id)}}">{{=row.title}}</a></td>
+            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
             <td>{{=row.created_on}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
+
+            {{if row.image:}}
             <td><img width="100px"
      src="{{=URL('download', args=row.image)}}" /></td>
         </tr>
         {{pass}}
-    </table>
+        {{pass}}
+     </table>

@@ -9,6 +9,7 @@
 #########################################################################
 
 def index():
+    
     rows = db(db.posts).select()
 
     #if form.accepted:
@@ -38,13 +39,6 @@ def show():
     
     return locals()
 
-
-def item():
-    curr_item = db.posts(request.args(0,cast=int)) or redirect(URL('index'))
-    rows = db(db.posts.id != request.args(0,cast=int)).select()
-    return locals()
-
-
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
@@ -55,16 +49,38 @@ def showByCategory():
 def messaging():
     
     rows = db(db.messages.User_ID2==auth.user.id).select()
+    
     form3 = SQLFORM(db.messages).process()
     
     if form3.accepted:
         redirect('messaging')
+        
     return locals()    
 
 @auth.requires_login()
 def my_profile():
-    name = auth.user.first_name
+    fname = auth.user.first_name
+    lname = auth.user.last_name
+    infos = db(db.profile.User_ID==auth.user.id).select()
     rows = db(db.posts.User_ID==auth.user.id).select()
+    
+    return locals()
+
+
+def show_profile():
+    x = request.args[0]
+    #x=1
+    infos = db(db.profile.User_ID==x).select()
+    rows = db(db.posts.User_ID==x).select()
+    thing = db.auth_user(id=x)
+    
+    return locals()
+
+@auth.requires_login()
+def profile():
+    
+    form = SQLFORM(db.profile).process()
+    
     return locals()
 
 @auth.requires_membership('managers')
@@ -82,9 +98,8 @@ def rating_callback():
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
         
-        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()
+        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()[0]
         if voter:
-            voter = voter[0]
             score = voter.score
             Rating.update_record(score=Rating.score-score)
             Rating.update_record(score=Rating.score+rate)
@@ -92,13 +107,13 @@ def rating_callback():
             voter.update_record(score = rate)
             response.flash="You changed your vote"
             
-        else:
+        elif Rating:
             
             Rating.update_record(Rcount=Rating.Rcount+ 1)
             Rating.update_record(score=Rating.score+rate)
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
-            response.flash="new vote"
+
 
 def testCss():
     
@@ -149,8 +164,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-def item():
-    rows = db(db.posts.id != request.args(0,cast=int)).select()
-    curr_item = db.posts(request.args(0,cast=int))
-    return locals()

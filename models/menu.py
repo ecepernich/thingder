@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('Thingder'),XML('&trade;&nbsp;'),
-                  _class="navbar-brand",_href="http://127.0.0.1:8000/thingder/default/index",
+                  _class="navbar-brand",_href="http://127.0.0.1:8000/thingder/",
                   _id="web2py-logo")
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
