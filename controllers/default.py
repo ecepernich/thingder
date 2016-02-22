@@ -165,3 +165,7 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+def delete_post():
+    vars = request.post_vars.id
+    response.flash("hi")

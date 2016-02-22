@@ -34,7 +34,19 @@
             {{if row.image:}}
             <td><img width="100px"
      src="{{=URL('download', args=row.image)}}" /></td>
-        </tr>
+        
+             <td><button post_id="{{=row.id}}" class="btn btn-danger delete_post">Delete Post</button></td>
+         </tr>
         {{pass}}
         {{pass}}
      </table>
+
+<script>
+    $(document).ready(function() {
+        $("button").click(function() {
+            jQuery.ajax({method:'post', url:'{{=URL('../delete_post')}}',
+                    data:{'id':1},
+                    success: function(data){} });
+        });
+    });
+</script>

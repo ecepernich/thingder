@@ -1,3 +1,9 @@
+* {
+    line-height: 180%;
+    font-size: 20px;
+    font-weight: 100;
+}
+
 .navbar-custom {
 	background-color:#229922;
     color:#000000;
@@ -29,7 +35,9 @@
   	background-color:#33aa33;
 }
 
-#card {   
+#card {  
+    vertical-align: center;
+    text-align: center;
     margin: 10px 0px 10px 0px;
     padding: 5px 10px 5px 10px;
     background-color: #cfcfcf;
