@@ -44,9 +44,15 @@
 <script>
     $(document).ready(function() {
         $("button").click(function() {
-            jQuery.ajax({method:'post', url:'{{=URL('../delete_post')}}',
-                    data:{'id':1},
-                    success: function(data){} });
+            val = $(this).attr("post_id");
+            $.ajax({
+                method: "POST",
+                url:'{{=URL('../delete_post')}}',
+                data: {'post_id': val}
+                }).fail(function(err,status){
+                    console.log(err);
+                    console.log(status);
+            });                
         });
     });
 </script>

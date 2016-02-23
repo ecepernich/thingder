@@ -115,7 +115,7 @@ def rating_callback():
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
             response.flash="new vote"
-
+            
 def testCss():
     
     return locals()
@@ -167,5 +167,7 @@ def call():
     return service()
 
 def delete_post():
-    vars = request.post_vars.id
-    response.flash("hi")
+    post_id = request.post_vars.post_id
+    query = db.posts.id==post_id
+    db(query).delete()
+    response.flash = "Post deleted"
