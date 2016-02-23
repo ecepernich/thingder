@@ -25,7 +25,7 @@
 <h3>Recent Posts</h3>
  <table class="table">
         {{for row in rows:}}
-        <tr>
+        <tr id={{=row.id}}>
             <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
             <td>{{=row.created_on}}</td>
             <td>{{=row.interests}}</td>
@@ -34,25 +34,25 @@
             {{if row.image:}}
             <td><img width="100px"
      src="{{=URL('download', args=row.image)}}" /></td>
-        
+            {{pass}}
              <td><button post_id="{{=row.id}}" class="btn btn-danger delete_post">Delete Post</button></td>
          </tr>
-        {{pass}}
         {{pass}}
      </table>
 
 <script>
     $(document).ready(function() {
         $("button").click(function() {
+            row = $(this);
             val = $(this).attr("post_id");
             $.ajax({
                 method: "POST",
                 url:'{{=URL('../delete_post')}}',
-                data: {'post_id': val}
-                }).fail(function(err,status){
-                    console.log(err);
-                    console.log(status);
-            });                
-        });
-    });
+                data: {'post_id': val},
+                success: function(data){
+                    row.closest("tr").remove();
+                    }
+                });
+            });
+        });                
 </script>
