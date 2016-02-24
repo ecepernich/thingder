@@ -165,3 +165,26 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+def getItems(items):
+    items = items.replace(" ", "")
+    items = items.lower()
+    items = items.split(",")
+    return items
+
+#input_list == rows
+#intersts_list == all tokens of curr_item.intersts
+
+def getMatchLists(input_list, match_list, curr_item):
+    curr_interest_list = getItems(curr_item.intersts)
+    for row in input_list:
+        input_interst_list = getItems(input_list.intersts);
+        for index in interest_list:
+            if((curr_interest_list[index] == input_list.offer) and (==))
+            
+    return
+
+def item():
+    curr_item = db.posts(request.args(0,cast=int))
+    rows = db(db.posts.created_by != curr_item.created_by).select()
+    return locals()
