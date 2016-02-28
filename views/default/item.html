@@ -28,3 +28,16 @@
         </div>
       {{pass}}
  </div>
+
+<h1>
+    Close Match Items
+</h1>
+<div class="card-container">
+        {{for row in incomplete_rows:}}
+        <div class="card">
+            <div class="front">
+                <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
+             </div>
+        </div>
+      {{pass}}
+ </div>

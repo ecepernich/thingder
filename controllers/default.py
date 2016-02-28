@@ -175,15 +175,21 @@ def getItems(items):
 #input_list == rows
 #intersts_list == all tokens of curr_item.intersts
 
-def checkMatch(offer_item, input_list):
-    match = 0
-    interst_list = getItem(input_list)
-    for item in interst_list:
-        if(item == offer_item):
-            match= 1
+def checkMatch(input_list):
+    interst_list = getItems(input_list.interests)
+    match = db(db.posts.created_by != input_list.created_by)
+    match = db(db.posts.interests == input_list.offers )
+    '''for item in interst_list:
+        match =  db(db.posts.offers == item).select()'''
     return match
 
 def item():
     curr_item = db.posts(request.args(0,cast=int))
-    rows = db(db.posts.created_by != curr_item.created_by).select() and db(db.posts.offers == curr_item.interests).select() and db(db.posts.interests == curr_item.offers).select()
+    '''
+    rows = db(db.posts.created_by != curr_item.created_by).select()
+    rows = db(db.posts.interests == curr_item.offers ).select()
+    rows = db(db.posts.offers == curr_item.interests ).select()
+    '''
+    rows = checkMatch(curr_item).select()
+    incomplete_rows = rows
     return locals()
