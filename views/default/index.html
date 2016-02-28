@@ -1,7 +1,5 @@
 {{extend 'layout.html'}}
 
-
-
 <html>
    <h2>Welcome to Thingder!</h2>
     <br>
@@ -18,13 +16,16 @@
         {{for row in rows:}}
         <tr>
             <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
-            <td>{{=row.created_by.first_name}}</td>
+            <td><a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></td>
             <td>{{=row.created_on}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
+
+            {{if row.image:}}
             <td><img width="100px"
      src="{{=URL('download', args=row.image)}}" /></td>
         </tr>
+        {{pass}}
         {{pass}}
     </table>
     
