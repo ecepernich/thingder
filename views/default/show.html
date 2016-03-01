@@ -22,7 +22,7 @@
         <h4>offering: {{post.offers}}</h4>
     </li>
 <body>
-    
+ 
     <div class="well">
         <!-- add conditional python to control which star is checked; pull rating from database -->
     <p>{{if voter:}} vote again {{else:}} rate this user {{pass}}</p>
@@ -31,7 +31,7 @@
         
     </div>
     <br>
-    
+{{if auth.user:}}
     <form action='../rating_callback' method="post">
         <div id="radioButtonContainerId">
     <fieldset class="rating">     
@@ -59,6 +59,7 @@
     <input type="submit" value="message {{=post.created_by.first_name}}"/>
     
 </form>
+{{pass}}
     </body>
 </html>
 

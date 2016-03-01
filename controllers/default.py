@@ -16,6 +16,9 @@ def index():
         #redirect(URL('other', vars={ 'your_name':form.vars.your_name}))
     return locals()
 
+def user(): 
+    return dict(form=auth())
+
 @auth.requires_login()
 def create():
     
