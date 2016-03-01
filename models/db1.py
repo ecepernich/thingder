@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
-categories=['Car','House','Misc.']
+categories=['Computers', 'Car', 'Electronics', 'House', 'Video Games', 'Misc.']
+locations=['Bakersfield', 'Chico', 'Fresno', 'Gold Country', 'Hanford', 'Inland Empire', 'Las Vegas', 'Los Angeles', 'Mercred', 'Modestro', 'Orange Co', 'Palm Springs', 'Reno', 'Sacramento', 'San luis Obispo', 'Santa Barbara', 'Stockton''San Jose', 'Santa Cruz']
+
 db.define_table('posts',
                 Field('title', requires=IS_NOT_EMPTY()),
                 Field('interests'),
                 Field('offers'),
                 Field('category', requires=IS_IN_SET(categories)),
+                Field('locations', requires=IS_IN_SET(locations)),
                 Field('image', 'upload'),
                 Field('User_ID', 'reference auth_user', readable=False, writable=False),
                 auth.signature)

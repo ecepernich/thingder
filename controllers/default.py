@@ -47,6 +47,12 @@ def showByCategory():
     rows = db(db.posts.category==var1).select()
     return locals()
 
+def showByLocations():
+    var2 = request.vars.filter2
+    rows= db(db.posts.locations==var2).select()
+    
+    return locals()
+
 @auth.requires_login()
 def messaging():
     rows = db(db.messages.User_ID2==auth.user.id).select()
