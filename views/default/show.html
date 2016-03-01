@@ -5,33 +5,28 @@
     <title>Rating</title>
     <link rel='stylesheet' type='text/css' href='../static/css/style.css'>
 </head>
- 
-    
-<h2>Post by: <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a> </h2>
-<h2>{{=post.title}}</h2>
-<img style="float: left;" width=260px; height=260px; src="{{=URL('download', args=post.image)}}"/>
-
-    
-<p>Posted on {{=post.created_on}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></p>
-<br>
-<ol>
-    <li>
-        <h4>Wants: {{=post.interests}}</h4>
-    </li>
-    <li>
-        <h4>offering: {{post.offers}}</h4>
-    </li>
 <body>
- 
+    
+    <h1>{{=post.title}}</h1>
+    <i>Posted: {{=post.created_on}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></i>
+    <br>
+        {{if post.image:}}
+            <img vertical-align="" width="260px" height="260px" src="{{=URL('download', args=post.image)}}"/>
+        {{pass}}
+
+    <br>
+    <ul>
+        <li><h4>Wants: {{=post.interests}}</h4></li>
+        <li><h4>offering: {{post.offers}}</h4></li>
+    </ul>
+    
+    {{if auth.user:}}
     <div class="well">
         <!-- add conditional python to control which star is checked; pull rating from database -->
     <p>{{if voter:}} vote again {{else:}} rate this user {{pass}}</p>
-        
-           
-        
     </div>
+    
     <br>
-{{if auth.user:}}
     <form action='../rating_callback' method="post">
         <div id="radioButtonContainerId">
     <fieldset class="rating">     
@@ -59,8 +54,11 @@
     <input type="submit" value="message {{=post.created_by.first_name}}"/>
     
 </form>
-{{pass}}
-    </body>
+    {{pass}}
+
+
+
+</body>
 </html>
 
 <script>

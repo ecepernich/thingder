@@ -13,35 +13,20 @@
             <input id="category_button" style="margin: 10px; height: 40px" type="submit" value="filter" disabled>
         </select>
     </form>
-    <!--
-    <table class="table">
-        {{for row in rows:}}
-        <tr>
-            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
-            <td><a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></td>
-            <td>{{=row.created_on}}</td>
-            <td>{{=row.interests}}</td>
-            <td>{{=row.offers}}</td>
 
-            {{if row.image:}}
-            <td><img width="100px"
-     src="{{=URL('download', args=row.image)}}" /></td>
-        </tr>
-        {{pass}}
-        {{pass}}
-    </table>
-    -->
     <div class="container-fluid">
         <div class="row">
         {{for row in rows:}}
                 <div class="col-md-3">
                     <div id="card">
-                        <a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a>
+                        <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
                         <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
                         <p>Created on: {{=row.created_on}}</p>
                         <p>Interested in: {{=row.interests}}</p>
-                        <p>Offering: {{row.offers}}</p>
-                        <img vertical-align="" width="100%" height="260px" src="{{=URL('download', args=row.image)}}"/>
+                        <p>Offering: {{=row.offers}}</p>
+                        {{if row.image:}}
+                        <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
+                        {{pass}}
                     </div>
                 </div>
         {{pass}}

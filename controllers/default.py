@@ -45,16 +45,12 @@ def show():
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
-    
     return locals()
 
 @auth.requires_login()
 def messaging():
-    
     rows = db(db.messages.User_ID2==auth.user.id).select()
-    
     form3 = SQLFORM(db.messages).process()
-    
     if form3.accepted:
         redirect('messaging')
         
@@ -91,6 +87,7 @@ def manage():
     grid = SQLFORM.grid(db.posts)
     return locals()
 
+@auth.requires_login()
 def rating_callback():
     vars = request.post_vars
     voted = False
@@ -118,7 +115,7 @@ def rating_callback():
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
             response.flash="new vote"
-            
+
 def testCss():
     
     return locals()
@@ -174,3 +171,31 @@ def delete_post():
     query = db.posts.id==post_id
     db(query).delete()
     response.flash = "Post deleted"
+
+def getItems(items):
+    items = items.replace(" ", "")
+    items = items.lower()
+    items = items.split(",")
+    return items
+
+#input_list == rows
+#intersts_list == all tokens of curr_item.intersts
+
+def checkMatch(input_list):
+    interst_list = getItems(input_list.interests)
+    match = db(db.posts.created_by != input_list.created_by)
+    match = db(db.posts.interests == input_list.offers )
+    '''for item in interst_list:
+        match =  db(db.posts.offers == item).select()'''
+    return match
+
+def item():
+    curr_item = db.posts(request.args(0,cast=int))
+    '''
+    rows = db(db.posts.created_by != curr_item.created_by).select()
+    rows = db(db.posts.interests == curr_item.offers ).select()
+    rows = db(db.posts.offers == curr_item.interests ).select()
+    '''
+    rows = checkMatch(curr_item).select()
+    incomplete_rows = rows
+    return locals()
