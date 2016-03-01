@@ -42,16 +42,12 @@ def show():
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
-    
     return locals()
 
 @auth.requires_login()
 def messaging():
-    
     rows = db(db.messages.User_ID2==auth.user.id).select()
-    
     form3 = SQLFORM(db.messages).process()
-    
     if form3.accepted:
         redirect('messaging')
         
@@ -88,6 +84,7 @@ def manage():
     grid = SQLFORM.grid(db.posts)
     return locals()
 
+@auth.requires_login()
 def rating_callback():
     vars = request.post_vars
     voted = False
@@ -98,8 +95,9 @@ def rating_callback():
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
         
-        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()[0]
+        voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()
         if voter:
+            voter = voter[0]
             score = voter.score
             Rating.update_record(score=Rating.score-score)
             Rating.update_record(score=Rating.score+rate)
@@ -107,13 +105,13 @@ def rating_callback():
             voter.update_record(score = rate)
             response.flash="You changed your vote"
             
-        elif Rating:
+        else:
             
             Rating.update_record(Rcount=Rating.Rcount+ 1)
             Rating.update_record(score=Rating.score+rate)
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
-
+            response.flash="new vote"
 
 def testCss():
     
@@ -164,3 +162,31 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+def getItems(items):
+    items = items.replace(" ", "")
+    items = items.lower()
+    items = items.split(",")
+    return items
+
+#input_list == rows
+#intersts_list == all tokens of curr_item.intersts
+
+def checkMatch(input_list):
+    interst_list = getItems(input_list.interests)
+    match = db(db.posts.created_by != input_list.created_by)
+    match = db(db.posts.interests == input_list.offers )
+    '''for item in interst_list:
+        match =  db(db.posts.offers == item).select()'''
+    return match
+
+def item():
+    curr_item = db.posts(request.args(0,cast=int))
+    '''
+    rows = db(db.posts.created_by != curr_item.created_by).select()
+    rows = db(db.posts.interests == curr_item.offers ).select()
+    rows = db(db.posts.offers == curr_item.interests ).select()
+    '''
+    rows = checkMatch(curr_item).select()
+    incomplete_rows = rows
+    return locals()
