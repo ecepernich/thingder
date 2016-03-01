@@ -12,21 +12,22 @@
             <input type="submit" value="filter">
         </select>
     </form>
-    <table class="table">
+    <div class="container-fluid">
+        <div class="row">
         {{for row in rows:}}
-        <tr>
-            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
-            <td><a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></td>
-            <td>{{=row.created_on}}</td>
-            <td>{{=row.interests}}</td>
-            <td>{{=row.offers}}</td>
-
-            {{if row.image:}}
-            <td><img width="100px"
-     src="{{=URL('download', args=row.image)}}" /></td>
-        </tr>
+                <div class="col-md-3">
+                    <div id="card">
+                        <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
+                        <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
+                        <p>Created on: {{=row.created_on}}</p>
+                        <p>Interested in: {{=row.interests}}</p>
+                        <p>Offering: {{=row.offers}}</p>
+                        {{if row.image:}}
+            <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
         {{pass}}
+                    </div>
+                </div>
         {{pass}}
-    </table>
-    
+        </div>
+    </div>
 </html>

@@ -26,7 +26,7 @@
  <table class="table">
         {{for row in rows:}}
         <tr>
-            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
+            <td><a href="{{=URL('item',args=row.id)}}">{{=row.title}}</a></td>
             <td>{{=row.created_on}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
