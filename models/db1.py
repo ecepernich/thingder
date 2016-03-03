@@ -15,7 +15,7 @@ db.define_table('posts',
                 
 db.define_table('messages',
                 Field('body', 'text'),
-                Field('User_ID2'),
+                Field('recepient'),
                 auth.signature)
 db.define_table('rating',
                 Field('User_ID', 'reference auth_user', readable=False, writable=False),

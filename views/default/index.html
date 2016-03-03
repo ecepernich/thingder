@@ -43,7 +43,7 @@
         </select>
     </form>
 
-    <div class="container-fluid">
+   <!-- <div class="container-fluid">
         <div class="row">
         {{for row in rows:}}
                 <div class="col-md-3">
@@ -60,7 +60,31 @@
                 </div>
         {{pass}}
         </div>
-    </div>
+    </div> -->
+    {{for i,row in enumerate(rows):}}
+{{if i==items_per_page: break}}
+<div class="col-md-3">
+                    <div id="card">
+                        <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
+                        <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
+                        <p>Created on: {{=row.created_on}}</p>
+                        <p>Interested in: {{=row.interests}}</p>
+                        <p>Offering: {{=row.offers}}</p>
+                        {{if row.image:}}
+                        <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
+                        {{pass}}
+                    </div>
+                </div><br />
+    
+{{pass}}
+
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">previous</a>
+{{pass}}
+
+{{if len(rows)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">next</a>
+{{pass}}
 </html>
 
 <script>
@@ -83,4 +107,24 @@
             }
         });
     });
+    /* Javascript for search bar auto complete */
+    $(function() {
+    var availableTags = [
+    {{recepients = db(db.auth_user).select()}}
+        {{l=[]}}
+    {{for user in recepients:}}
+    {{l.append(user.first_name)}}
+    {{pass}}
+      {{ for x in l:}}
+        {{if x == l[len(l)-1]:}} 
+            "{{=x}}"
+    {{else:}} "{{=x}}",
+{{pass}}
+    {{pass}}
+    ];
+    $( "#search" ).autocomplete({
+      source: availableTags
+      
+    });
+  });
 </script>

@@ -9,7 +9,7 @@
     color:#000000;
   	border-radius:0;
 }
-  
+ 
 .navbar-custom .navbar-nav > li > a {
   	color:#000;
   	padding-left:20px;
@@ -44,4 +44,18 @@
     border: 4px solid green;
     border-radius: 5px;
     display: inline-block;
+}
+body .ui-autocomplete {
+  z-index: 9999 !important;
+    background: none !important;
+    background-color: #85e085 !important;
+    border: #000000 !important;
+}
+.ui-helper-hidden-accessible { display:none; }
+body .ui-autocomplete .ui-menu-item .ui-corner-all {
+   
+}
+
+body .ui-autocomplete .ui-menu-item .ui-state-focus {
+   
 }
