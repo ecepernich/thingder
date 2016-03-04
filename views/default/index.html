@@ -61,9 +61,10 @@
         {{pass}}
         </div>
     </div> -->
+    <table class="table">
     {{for i,row in enumerate(rows):}}
 {{if i==items_per_page: break}}
-<div class="col-md-3">
+<div class="col-md-3"><td>
                     <div id="card">
                         <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
                         <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
@@ -74,10 +75,10 @@
                         <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
                         {{pass}}
                     </div>
-                </div><br />
+        </div><br /></td>
     
 {{pass}}
-
+    </table>
 {{if page:}}
 <a href="{{=URL(args=[page-1])}}">previous</a>
 {{pass}}
