@@ -106,9 +106,17 @@ def show_profile():
 def test_map():
     location = request.args(0, cast=str)
     return locals()
+
 @auth.requires_login()
 def profile():
+    user_id = request.args(0)
+    profile_row = db(db.profile.User_ID==user_id).select()[0]
+    #exists_info = db(db.profile(db.profile.User_ID==user_id))
     
+    #if (exists_info):
+    #    response.flash="THIS USER HAS A PROFILE"
+    #else:
+    #    response.flash="THIS USER DOESN'T"
     form = SQLFORM(db.profile).process()
     
     return locals()

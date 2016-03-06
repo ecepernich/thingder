@@ -25,6 +25,7 @@
             <h3></h3>
             <td>About You: {{if abtme==None:}}You haven't entered your about me yet.{{else:}}{{=info.about_me}}{{pass}}</td>
             <h3></h3>
+<a href="{{=URL('profile',args=auth.user.id)}}"><button id="profile">Edit Profile</button></a>
             
         {{pass}}
 
@@ -68,5 +69,8 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
                     }
                 });
             });
-        });                
+        $("#profile").click(function() {
+            
+        });
+    
 </script>
