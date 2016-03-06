@@ -75,17 +75,19 @@ def my_profile():
     lname = auth.user.last_name
     infos = db(db.profile.User_ID==auth.user.id).select()
     rows = db(db.posts.User_ID==auth.user.id).select()
+    rates = db(db.rating.User_ID==auth.user.id).select()
     
     return locals()
 
 
 def show_profile():
     if request.args:
-        x = request.args[0]
-        #x=1
-        infos = db(db.profile.User_ID==x).select()
-        rows = db(db.posts.User_ID==x).select()
-        thing = db.auth_user(id=x)
+        get_ID = request.args[0]
+        infos = db(db.profile.User_ID==get_ID).select()
+        rows = db(db.posts.User_ID==get_ID).select()
+        rates = db(db.rating.User_ID==get_ID).select()
+        thing = db.auth_user(id=get_ID)
+        voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
     if request.vars:
         name = request.vars.search_filter
         person = db(db.auth_user.first_name == name).select()
@@ -174,6 +176,7 @@ def user():
     to decorate functions that need access control
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
+    auth.settings.register_onaccept.append(lambda form: db.profile.insert(User_ID=auth.user.id))
     return dict(form=auth())
 
 
