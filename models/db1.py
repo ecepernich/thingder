@@ -31,7 +31,7 @@ db.define_table('votes',
 
 db.define_table('profile',
                 Field('User_ID','reference auth_user', readable=False, writable=False),
-                Field('image','upload',default='defaultprofile.png'),
+                Field('image','upload'),
                 Field('zip_code'),
                 Field('age','integer'),
                 Field('about_me','text'),
