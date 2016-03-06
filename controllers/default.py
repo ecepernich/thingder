@@ -9,8 +9,14 @@
 #########################################################################
 
 def index():
-    
-    rows = db(db.posts).select()
+    #pagination from web2py manual
+    if len(request.args): page=int(request.args[0])
+    else: page=0
+    items_per_page=5
+    limitby=(page*items_per_page,(page+1)*items_per_page+1)
+    rows=db().select(db.posts.ALL,limitby=limitby)
+    return locals()
+    #rows = db(db.posts).select()
 
     #if form.accepted:
         #redirect(URL('other', vars={ 'your_name':form.vars.your_name}))
@@ -45,6 +51,7 @@ def show():
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
+    
     return locals()
 
 def showByLocations():
@@ -55,7 +62,7 @@ def showByLocations():
 
 @auth.requires_login()
 def messaging():
-    rows = db(db.messages.User_ID2==auth.user.id).select()
+    rows = db(db.messages.recepient==auth.user.first_name).select(orderby=~db.messages.created_on)
     form3 = SQLFORM(db.messages).process()
     if form3.accepted:
         redirect('messaging')
@@ -68,19 +75,37 @@ def my_profile():
     lname = auth.user.last_name
     infos = db(db.profile.User_ID==auth.user.id).select()
     rows = db(db.posts.User_ID==auth.user.id).select()
+    rates = db(db.rating.User_ID==auth.user.id).select()
     
     return locals()
 
 
 def show_profile():
-    x = request.args[0]
-    #x=1
-    infos = db(db.profile.User_ID==x).select()
-    rows = db(db.posts.User_ID==x).select()
-    thing = db.auth_user(id=x)
-    
+    if request.args:
+        get_ID = request.args[0]
+        infos = db(db.profile.User_ID==get_ID).select()
+        rows = db(db.posts.User_ID==get_ID).select()
+        rates = db(db.rating.User_ID==get_ID).select()
+        thing = db.auth_user(id=get_ID)
+        voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
+    if request.vars:
+        name = request.vars.search_filter
+        person = db(db.auth_user.first_name == name).select()
+        if person:
+            person = person[0]
+            x = person.id
+            infos = db(db.profile.User_ID==x).select()
+            rows = db(db.posts.User_ID==x).select()
+            thing = db.auth_user(id=x)
+        else:
+            session.flash = "sorry, we couldn't find what you were looking for :("
+            redirect(URL('index'))
+            
     return locals()
 
+def test_map():
+    location = request.args(0, cast=str)
+    return locals()
 @auth.requires_login()
 def profile():
     
@@ -121,7 +146,7 @@ def rating_callback():
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
             response.flash="new vote"
-
+    return locals()
 def testCss():
     
     return locals()
@@ -151,6 +176,7 @@ def user():
     to decorate functions that need access control
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
+    auth.settings.register_onaccept.append(lambda form: db.profile.insert(User_ID=auth.user.id))
     return dict(form=auth())
 
 
