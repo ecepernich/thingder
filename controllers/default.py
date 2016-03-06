@@ -51,6 +51,7 @@ def show():
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
+    
     return locals()
 
 def showByLocations():
@@ -100,6 +101,9 @@ def show_profile():
             
     return locals()
 
+def test_map():
+    location = request.args(0, cast=str)
+    return locals()
 @auth.requires_login()
 def profile():
     
