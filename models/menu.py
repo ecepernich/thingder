@@ -1,5 +1,12 @@
-# -*- coding: utf-8 -*-
-# this file is released under public domain and you can use without limitations
+# -*- coding: utf-8 -mail = auth.settings.mailer
+mail.settings.server = "stmp.gmail.com:587"
+mail.settings.sender= "autoweb2py@gmail.com"
+mail.settings.login = "autoweb2py@gmail.com:waolokssqdipvbkp"
+
+auth.settings.registration_requires_verification = True
+
+def send_email(user, subject):
+    message = "Multi Line string for %string(first_name)s"# this file is released under public domain and you can use without limitations
 
 #########################################################################
 ## Customize your APP title, subtitle and menus here
@@ -82,3 +89,17 @@ def _():
 if DEVELOPMENT_MENU: _()
 
 if "auth" in locals(): auth.wikimenu()
+
+mail = auth.settings.mailer
+mail.settings.server = "smtp.gmail.com:587"
+mail.settings.sender= "autoweb2py@gmail.com"
+mail.settings.login = "autoweb2py@gmail.com:waolokssqdipvbkp"
+
+auth.settings.registration_requires_verification = True
+
+def send_email(user, subject):
+    message = " Multi line string for %string(first_name)s"
+    message = open("somefile.html", "r").read()
+    mail.send(to=user.email,
+              subject=subject,
+              message=message % user)

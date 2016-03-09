@@ -180,6 +180,11 @@ def item():
     one_way_match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "111111111111111111111111111")
     for item in item_list:
          one_way_match = one_way_match & rows.find(lambda row: row.offers.lower().replace(" ", "") == item)
-    match = one_way_match
+
+    match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "111111111111111111111111111")
+    for row in rows:
+        item_list = getItems(row.interests)
+        for item in item_list:
+            match = match & one_way_match.find(lambda row: row.offers == item)
 
     return locals()
