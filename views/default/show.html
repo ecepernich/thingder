@@ -17,8 +17,12 @@
     <br>
     <ul>
         <li><h4>Wants: {{=post.interests}}</h4></li>
-        <li><h4>offering: {{post.offers}}</h4></li>
+        <li><h4>offering: {{=post.offers}}</h4></li>
     </ul>
+    {{if post.created_by == auth.user.id:}}
+    <a href="{{=URL('edit_post',args=post.id)}}"><button>Edit Post</button></a>
+    {{pass}}
+
     
     {{if auth.user:}}
     <div class="well">
