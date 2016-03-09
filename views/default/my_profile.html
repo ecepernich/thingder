@@ -51,7 +51,7 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
             <td><img width="100px"
      src="{{=URL('download', args=row.image)}}" /></td>
             {{pass}}
-             <td><button post_id="{{=row.id}}" class="btn btn-danger delete_post">Delete Post</button></td>
+             <td><a href="{{=URL('edit_post',args=row.title)}}"><button>Edit Post</button></a>   <button post_id="{{=row.id}}" class="btn btn-danger delete_post">Delete Post</button> </td>
          </tr>
         {{pass}}
      </table>
