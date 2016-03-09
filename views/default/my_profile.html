@@ -1,16 +1,17 @@
 {{extend 'layout.html'}}
 <h1>{{=fname}} {{=lname}}</h1>
 <h1></h1>
+<a href="{{=URL('profile',args=auth.user.id)}}"><button>Edit Profile</button></a>
 <h1></h1>
 {{for info in infos:}}
 {{if info.image:}}
         <tr>
-            <td><img width="200px"
+            <td><img width="200px" height="200px"
      src="{{=URL('download', args=info.image)}}" /></td>
         </tr>
 {{else:}}
         <tr>
-            <td><img width="200px"
+            <td><img width="200px" height="200px"
      src="{{=URL('static', 'images/defaultprofile.png')}}" /></td>
         </tr>
         {{pass}}
@@ -19,15 +20,15 @@
 {{age=info.age}}
 {{zip=info.zip_code}}
 {{abtme=info.about_me}}
-            <td>Your Age: {{if age==None:}} You haven't entered your age yet. {{else:}}{{=info.age}}{{pass}}</td>
+            <td>Your Age: {{if not age:}} You haven't entered your age yet. {{else:}}{{=info.age}}{{pass}}</td>
             <h3></h3>
-            <td>Your Zip Code: {{if zip==None:}}You haven't entered your zipcode yet.{{else:}}{{=info.zip_code}}{{pass}}</td>
+            <td>Your Zip Code: {{if not zip:}}You haven't entered your zipcode yet.{{else:}}{{=info.zip_code}}{{pass}}</td>
             <h3></h3>
-            <td>About You: {{if abtme==None:}}You haven't entered your about me yet.{{else:}}{{=info.about_me}}{{pass}}</td>
+            <td>About You: {{if not abtme:}}You haven't entered your about me yet.{{else:}}{{=info.about_me}}{{pass}}</td>
             <h3></h3>
-<a href="{{=URL('profile',args=auth.user.id)}}"><button id="profile">Edit Profile</button></a>
             
         {{pass}}
+
 
 {{for rate in rates:}} 
 {{userrating=rate.rating}}
@@ -69,8 +70,5 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
                     }
                 });
             });
-        $("#profile").click(function() {
-            
-        });
-    
+        });                
 </script>
