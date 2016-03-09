@@ -34,7 +34,6 @@ db.define_table('profile',
                 Field('image','upload'),
                 Field('zip_code'),
                 Field('age','integer'),
-                Field('about_me','text')
-                )
+                Field('about_me','text'))
 db.profile.zip_code.requires = IS_MATCH('^\d{5}(-\d{4})?$',
          error_message='not a zip code')
