@@ -68,7 +68,6 @@
                     <div id="card">
                         <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
                         <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
-                        <p>Created on: {{=row.created_on}}</p>
                         <p>Interested in: {{=row.interests}}</p>
                         <p>Offering: {{=row.offers}}</p>
                         {{if row.image:}}
