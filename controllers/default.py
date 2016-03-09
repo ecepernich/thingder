@@ -22,42 +22,42 @@ def index():
         #redirect(URL('other', vars={ 'your_name':form.vars.your_name}))
     return locals()
 
-def user(): 
+def user():
     return dict(form=auth())
 
 @auth.requires_login()
 def create():
-    
+
     db.posts.User_ID.default = auth.user.id
     form = SQLFORM(db.posts).process()
     db.posts.User_ID.readable = False
-    if form.accepted: 
-        
+    if form.accepted:
+
         rows = db(db.rating.User_ID==auth.user.id).select()
-        
+
         if(not rows):
             db.rating.insert(User_ID=auth.user.id, rating=0, Rcount=0, score=0)
-            
+
         redirect(URL('index'))
-        
+
     return locals()
 
 def show():
     post = db.posts(request.args(0, cast=int))
     voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==post.created_by)).select()
-    
+
     return locals()
 
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
-    
+
     return locals()
 
 def showByLocations():
     var2 = request.vars.filter2
     rows= db(db.posts.locations==var2).select()
-    
+
     return locals()
 
 @auth.requires_login()
@@ -66,8 +66,8 @@ def messaging():
     form3 = SQLFORM(db.messages).process()
     if form3.accepted:
         redirect('messaging')
-        
-    return locals()    
+
+    return locals()
 
 @auth.requires_login()
 def my_profile():
@@ -76,7 +76,7 @@ def my_profile():
     infos = db(db.profile.User_ID==auth.user.id).select()
     rows = db(db.posts.User_ID==auth.user.id).select()
     rates = db(db.rating.User_ID==auth.user.id).select()
-    
+
     return locals()
 
 
@@ -100,11 +100,7 @@ def show_profile():
         else:
             session.flash = "sorry, we couldn't find what you were looking for :("
             redirect(URL('index'))
-            
-    return locals()
 
-def test_map():
-    location = request.args(0, cast=str)
     return locals()
 
 @auth.requires_login()
@@ -112,13 +108,18 @@ def profile():
     user_id = request.args(0)
     profile_row = db(db.profile.User_ID==user_id).select()[0]
     #exists_info = db(db.profile(db.profile.User_ID==user_id))
+    form=SQLFORM(db.profile, profile_row, showid=False)
+    if form.process().accepted:
+        session.flash="Profile Info Updated"
+        redirect(URL("my_profile"))
+    elif form.errors:
+        response.flash="Form has errors"
     
-    #if (exists_info):
-    #    response.flash="THIS USER HAS A PROFILE"
-    #else:
-    #    response.flash="THIS USER DOESN'T"
-    form = SQLFORM(db.profile).process()
-    
+    return locals()
+
+
+def test_map():
+    location = request.args(0, cast=str)
     return locals()
 
 @auth.requires_membership('managers')
@@ -130,13 +131,13 @@ def manage():
 def rating_callback():
     vars = request.post_vars
     voted = False
-    
+
     if vars:
         #make another table tracking who voted for who; then in the conditional check to see if the current user already has a vote logged for the user
         user = vars.user
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
-        
+
         voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()
         if voter:
             voter = voter[0]
@@ -146,9 +147,9 @@ def rating_callback():
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             voter.update_record(score = rate)
             response.flash="You changed your vote"
-            
+
         else:
-            
+
             Rating.update_record(Rcount=Rating.Rcount+ 1)
             Rating.update_record(score=Rating.score+rate)
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
@@ -156,7 +157,7 @@ def rating_callback():
             response.flash="new vote"
     return locals()
 def testCss():
-    
+
     return locals()
 
 def login():
