@@ -177,9 +177,9 @@ def item():
     curr_item = db.posts(request.args(0,cast=int))
     item_list = getItems(curr_item.interests)
     rows = db(db.posts.created_by != curr_item.created_by).select()
+    one_way_match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "111111111111111111111111111")
     for item in item_list:
-         rows.exclude(lambda row: row.offers.lower().replace(" ", "") != item)
-    incomplete_rows = rows
-    item_list2 = []
+         one_way_match = one_way_match & rows.find(lambda row: row.offers.lower().replace(" ", "") == item)
+    match = one_way_match
 
     return locals()

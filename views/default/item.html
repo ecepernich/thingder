@@ -20,7 +20,7 @@
 </h1>
 
 <div class="card-container">
-        {{for row in rows:}}
+        {{for row in match:}}
         <div class="card">
             <div class="front">
                 <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
@@ -33,7 +33,7 @@
     Close Match Items
 </h1>
 <div class="card-container">
-        {{for row in incomplete_rows:}}
+        {{for row in one_way_match:}}
         <div class="card">
             <div class="front">
                 <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
