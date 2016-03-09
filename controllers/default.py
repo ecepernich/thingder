@@ -179,12 +179,7 @@ def item():
     rows = db(db.posts.created_by != curr_item.created_by).select()
     for item in item_list:
          rows.exclude(lambda row: row.offers.lower().replace(" ", "") != item)
-
     incomplete_rows = rows
     item_list2 = []
-    for row in rows:
-        item_list = getItems(row.interests)
-        item_list2.append(item_list)
 
-    
     return locals()
