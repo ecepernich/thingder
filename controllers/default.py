@@ -93,10 +93,12 @@ def show_profile():
         person = db(db.auth_user.first_name == name).select()
         if person:
             person = person[0]
-            x = person.id
-            infos = db(db.profile.User_ID==x).select()
-            rows = db(db.posts.User_ID==x).select()
-            thing = db.auth_user(id=x)
+            get_ID = person.id
+            infos = db(db.profile.User_ID==get_ID).select()
+            rows = db(db.posts.User_ID==get_ID).select()
+            rates = db(db.rating.User_ID==get_ID).select()
+            thing = db.auth_user(id=get_ID)
+            voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
         else:
             session.flash = "sorry, we couldn't find what you were looking for :("
             redirect(URL('index'))
@@ -112,6 +114,19 @@ def profile():
     if form.process().accepted:
         session.flash="Profile Info Updated"
         redirect(URL("my_profile"))
+    elif form.errors:
+        response.flash="Form has errors"
+    
+    return locals()
+
+@auth.requires_login()
+def edit_post():
+    post_id = request.args(0)
+    post_row = db(db.posts.id==post_id).select()[0]
+    form=SQLFORM(db.posts, post_row, showid=False)
+    if form.process().accepted:
+        session.flash="Post Info Updated"
+        redirect(URL("show",args=post_id))
     elif form.errors:
         response.flash="Form has errors"
     
