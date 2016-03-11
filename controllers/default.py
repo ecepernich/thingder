@@ -51,14 +51,49 @@ def show():
 
 def showByCategory():
     var1 = request.vars.filter1
-    rows = db(db.posts.category==var1).select()
-
+    l = []
+    if len(request.args): page=int(request.args[0])
+    else: page=0
+    if len(request.args)==2: var1 = request.args[1]
+    items_per_page=5
+    lowerlimit=page*items_per_page
+    upperlimit=(page+1)*items_per_page+1
+    rows=db(db.posts.category==var1).select()
+    l = []
+    size = len(rows)
+    for x in range(lowerlimit, upperlimit):
+        #iterate through list
+        #if (upperlimit - size) > 0 & (upperlimit - size) <= items_per_page:
+            if x < len(rows):
+                l.append(rows[x])
+        #else:
+            #l.append(rows[x])
+            
+    #append to list
     return locals()
 
 def showByLocations():
     var2 = request.vars.filter2
-    rows= db(db.posts.locations==var2).select()
-
+    
+    l = []
+    if len(request.args): page=int(request.args[0])
+    else: page=0
+    if len(request.args)==2: var2 = request.args[1]
+    items_per_page=5
+    lowerlimit=page*items_per_page
+    upperlimit=(page+1)*items_per_page+1
+    rows=db(db.posts.locations==var2).select()
+    l = []
+    size = len(rows)
+    for x in range(lowerlimit, upperlimit):
+        #iterate through list
+        #if (upperlimit - size) > 0 & (upperlimit - size) <= items_per_page:
+            if x < len(rows):
+                l.append(rows[x])
+        #else:
+            #l.append(rows[x])
+            
+    #append to list
     return locals()
 
 @auth.requires_login()

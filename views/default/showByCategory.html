@@ -15,23 +15,34 @@
         {{pass}}
     </table>
 -->
-<h2>Sorted by category: {{=var1}}</h2>
-<div class="container-fluid">
-        <div class="row">
-        {{for row in rows:}}
-                <div class="col-md-3">
+<h2>Sorted by category: {{=var1}} <br> Page: {{=page+1}}</h2>
+<table class='table'>
+
+{{for i,row in enumerate(l):}}
+{{if i==items_per_page: break}}
+<div class="col-md-3"><td>
                     <div id="card">
-                        <a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a>
+                        <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
                         <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
                         <p>Created on: {{=row.created_on}}</p>
                         <p>Interested in: {{=row.interests}}</p>
-                        <p>Offering: {{row.offers}}</p>
-                        <img vertical-align="" width="100%" height="260px" src="{{=URL('download', args=row.image)}}"/>
+                        <p>Offering: {{=row.offers}}</p>
+                        {{if row.image:}}
+                        <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
+                        <h4><a href="{{=URL('test_map',args=row.locations)}}">Show on map</a></h4>
+                        {{pass}}
                     </div>
-                </div>
-        {{pass}}
-        </div>
-    </div>
+        </div><br /></td>
+    
+{{pass}}
+    </table>
+{{if page:}}
+<a href="{{=URL(args=[page-1,var1])}}">previous</a>
+{{pass}}
+
+{{if len(l)>items_per_page:}}
+<a style="float: right" href="{{=URL(args=[page+1,var1])}}">next</a>
+{{pass}}
 <script>
     /* Javascript for search bar auto complete */
     $(function() {
