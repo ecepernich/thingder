@@ -177,14 +177,15 @@ def item():
     curr_item = db.posts(request.args(0,cast=int))
     item_list = getItems(curr_item.interests)
     rows = db(db.posts.created_by != curr_item.created_by).select()
-    one_way_match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "111111111111111111111111111")
+    one_way_match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "@empty@")
+    match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "@empty@")
     for item in item_list:
          one_way_match = one_way_match & rows.find(lambda row: row.offers.lower().replace(" ", "") == item)
 
-    match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "111111111111111111111111111")
-    for row in rows:
+    for row in one_way_match:
         item_list = getItems(row.interests)
         for item in item_list:
-            match = match & one_way_match.find(lambda row: row.offers == item)
-
+            if curr_item.offers.lower().replace(" ", "") == item:
+                match.records.append(row)
+    one_way_match.exclude(lambda row: row in match)
     return locals()

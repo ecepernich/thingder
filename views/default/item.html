@@ -7,13 +7,22 @@
     {{=curr_item.created_by.first_name}}
 </h1>
 <br>
+<table>
+  <tr>
+    <td>
+        <img height="225" width="225" class="thumbnail" src="{{=URL('download', args=curr_item.image)}}"/>
+    </td>
+    <td>
+        <ul>
+            <li>Title:{{=curr_item.title}}</li>
+            <li>Interests:{{=curr_item.interests}}</li>
+            <li>Offers: {{=curr_item.offers}}</li>
+        </ul>
+     </td> 
 
-<ul>
-    <li>Title:{{=curr_item.title}}</li>
-    <li>Interests:{{=curr_item.interests}}</li>
-    <li>Offers: {{=curr_item.offers}}</li>
-    <li><img height="225" width="225" src="{{=URL('download', args=curr_item.image)}}"/></li>
-    </ul>
+  </tr>
+</table>
+
 <br>
 <h1>
     Trade Match
@@ -23,7 +32,7 @@
         {{for row in match:}}
         <div class="card">
             <div class="front">
-                <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
+                <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" class="thumbnail" src="{{=URL('download', args=row.image)}}"/></a>
              </div>
         </div>
       {{pass}}
@@ -36,7 +45,7 @@
         {{for row in one_way_match:}}
         <div class="card">
             <div class="front">
-                <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" src="{{=URL('download', args=row.image)}}"/></a>
+                <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" class="thumbnail" src="{{=URL('download', args=row.image)}}"/></a>
              </div>
         </div>
       {{pass}}
