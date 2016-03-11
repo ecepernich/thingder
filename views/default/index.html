@@ -98,12 +98,11 @@
 {{if page:}}
 <a href="{{=URL(args=[page-1])}}">previous</a>
 {{pass}}
-
+<b>|</b>
 {{if len(rows)>items_per_page:}}
 <a href="{{=URL(args=[page+1])}}">next</a>
 {{pass}}
 </html>
-
 <script>
     // Input box is initially disabled if a category is not specified. When a category is chosen, remove the disabled property from input
     // so that the box is usable - Joseph Campuzano
