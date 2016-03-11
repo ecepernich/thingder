@@ -222,22 +222,17 @@ def call():
     """
     return service()
 
-<<<<<<< HEAD
-=======
 def delete_post():
     post_id = request.post_vars.post_id
     query = db.posts.id==post_id
     db(query).delete()
     response.flash = "Post deleted"
 
->>>>>>> refs/remotes/origin/E3
 def getItems(items):
     items = items.replace(" ", "")
     items = items.lower()
     items = items.split(",")
     return items
-
-<<<<<<< HEAD
 
 def item():
     curr_item = db.posts(request.args(0,cast=int))
@@ -254,26 +249,4 @@ def item():
             if curr_item.offers.lower().replace(" ", "") == item:
                 match.records.append(row)
     one_way_match.exclude(lambda row: row in match)
-=======
-#input_list == rows
-#intersts_list == all tokens of curr_item.intersts
-
-def checkMatch(input_list):
-    interst_list = getItems(input_list.interests)
-    match = db(db.posts.created_by != input_list.created_by)
-    match = db(db.posts.interests == input_list.offers )
-    '''for item in interst_list:
-        match =  db(db.posts.offers == item).select()'''
-    return match
-
-def item():
-    curr_item = db.posts(request.args(0,cast=int))
-    '''
-    rows = db(db.posts.created_by != curr_item.created_by).select()
-    rows = db(db.posts.interests == curr_item.offers ).select()
-    rows = db(db.posts.offers == curr_item.interests ).select()
-    '''
-    rows = checkMatch(curr_item).select()
-    incomplete_rows = rows
->>>>>>> refs/remotes/origin/E3
     return locals()
