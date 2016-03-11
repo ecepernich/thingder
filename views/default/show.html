@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+{{from gluon.tools import prettydate}}
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,7 +9,7 @@
 <body>
     
     <h1>{{=post.title}}</h1>
-    <i>Posted: {{=post.created_on}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></i>
+    <i>Posted: {{=prettydate(post.created_on)}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></i>
     <br>
         {{if post.image:}}
             <img vertical-align="" width="260px" height="260px" src="{{=URL('download', args=post.image)}}"/>

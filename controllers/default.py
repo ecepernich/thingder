@@ -8,6 +8,8 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 
+from gluon.tools import prettydate
+
 def index():
     #pagination from web2py manual
     if len(request.args): page=int(request.args[0])
