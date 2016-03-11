@@ -45,7 +45,6 @@ def create():
 def show():
     post = db.posts(request.args(0, cast=int))
     voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==post.created_by)).select()
-
     return locals()
 
 def showByCategory():
@@ -144,9 +143,9 @@ def manage():
 
 @auth.requires_login()
 def rating_callback():
+    response.flash="HELLO"
     vars = request.post_vars
     voted = False
-
     if vars:
         #make another table tracking who voted for who; then in the conditional check to see if the current user already has a vote logged for the user
         user = vars.user

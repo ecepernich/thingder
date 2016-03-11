@@ -19,7 +19,7 @@
         <li><h4>Wants: {{=post.interests}}</h4></li>
         <li><h4>offering: {{=post.offers}}</h4></li>
     </ul>
-    {{if post.created_by == auth.user.id:}}
+    {{if post.created_by == auth.user_id:}}
     <a href="{{=URL('edit_post',args=post.id)}}"><button>Edit Post</button></a>
     {{pass}}
 
@@ -66,13 +66,12 @@
 </html>
 
 <script>
-    
     function do_ajax_vote(t, rating){
         var id =jQuery(t).attr('data-id');
         jQuery.ajax({method:'post', url:'{{=URL('../rating_callback')}}',
                      data:{'rate':rating, 'user':id},
                     success: function(data){} });
-    }
+    };
     $(document).ready(function() {
         $('#radioButtonContainerId input:radio').click(function() {
     if ($(this).val() === '4') {
