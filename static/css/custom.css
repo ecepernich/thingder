@@ -38,6 +38,9 @@
 #card {  
     vertical-align: center;
     text-align: center;
+    width: 344px;
+    min-height: 300px;
+    height: 425px;
     margin: 10px 0px 10px 0px;
     padding: 5px 10px 5px 10px;
     background-color: #cfcfcf;
