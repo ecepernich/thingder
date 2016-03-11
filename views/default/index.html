@@ -66,10 +66,26 @@
 {{if i==items_per_page: break}}
 <div class="col-md-3"><td>
                     <div id="card">
+                        {{if len(row.title) > 25:}}
+                        <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title[:23] + "..."}}</a></h3>
+                        {{else:}}
                         <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
+                        {{pass}}
+                        {{if len(row.created_by.first_name) > 17:}}
+                         <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name[:14] + "..."}}</a></p>
+                        {{else:}}
                         <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
+                        {{pass}}
+                        {{if len(row.interests) > 17:}}
+                        <p>Interested in: {{=row.interests[:14] + "..."}}</p>
+                        {{else:}}
                         <p>Interested in: {{=row.interests}}</p>
+                        {{pass}}
+                        {{if len(row.offers) > 17:}}
+                        <p>Offering: {{=row.offers[:14] + "..."}}</p>
+                        {{else:}}
                         <p>Offering: {{=row.offers}}</p>
+                        {{pass}}
                         {{if row.image:}}
                         <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
                         {{pass}}
