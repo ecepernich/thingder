@@ -9,53 +9,65 @@
 #########################################################################
 
 def index():
-    
-    rows = db(db.posts).select()
+    #pagination from web2py manual
+    if len(request.args): page=int(request.args[0])
+    else: page=0
+    items_per_page=5
+    limitby=(page*items_per_page,(page+1)*items_per_page+1)
+    rows=db().select(db.posts.ALL,limitby=limitby)
+    return locals()
+    #rows = db(db.posts).select()
 
     #if form.accepted:
         #redirect(URL('other', vars={ 'your_name':form.vars.your_name}))
     return locals()
 
+def user():
+    return dict(form=auth())
+
 @auth.requires_login()
 def create():
-    
+
     db.posts.User_ID.default = auth.user.id
     form = SQLFORM(db.posts).process()
     db.posts.User_ID.readable = False
-    if form.accepted: 
-        
+    if form.accepted:
+
         rows = db(db.rating.User_ID==auth.user.id).select()
-        
+
         if(not rows):
             db.rating.insert(User_ID=auth.user.id, rating=0, Rcount=0, score=0)
-            
+
         redirect(URL('index'))
-        
+
     return locals()
 
 def show():
     post = db.posts(request.args(0, cast=int))
     voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==post.created_by)).select()
-    
+
     return locals()
 
 def showByCategory():
     var1 = request.vars.filter1
     rows = db(db.posts.category==var1).select()
-    
+
+    return locals()
+
+def showByLocations():
+    var2 = request.vars.filter2
+    rows= db(db.posts.locations==var2).select()
+
     return locals()
 
 @auth.requires_login()
 def messaging():
-    
-    rows = db(db.messages.User_ID2==auth.user.id).select()
-    
+    rows = db(db.messages.recepient==auth.user.first_name).select(orderby=~db.messages.created_on)
     form3 = SQLFORM(db.messages).process()
-    
     if form3.accepted:
         redirect('messaging')
-        
-    return locals()    
+
+    return locals()
 
 @auth.requires_login()
 def my_profile():
@@ -63,24 +75,66 @@ def my_profile():
     lname = auth.user.last_name
     infos = db(db.profile.User_ID==auth.user.id).select()
     rows = db(db.posts.User_ID==auth.user.id).select()
-    
+    rates = db(db.rating.User_ID==auth.user.id).select()
+
     return locals()
 
 
 def show_profile():
-    x = request.args[0]
-    #x=1
-    infos = db(db.profile.User_ID==x).select()
-    rows = db(db.posts.User_ID==x).select()
-    thing = db.auth_user(id=x)
-    
+    if request.args:
+        get_ID = request.args[0]
+        infos = db(db.profile.User_ID==get_ID).select()
+        rows = db(db.posts.User_ID==get_ID).select()
+        rates = db(db.rating.User_ID==get_ID).select()
+        thing = db.auth_user(id=get_ID)
+        voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
+    if request.vars:
+        name = request.vars.search_filter
+        person = db(db.auth_user.first_name == name).select()
+        if person:
+            person = person[0]
+            get_ID = person.id
+            infos = db(db.profile.User_ID==get_ID).select()
+            rows = db(db.posts.User_ID==get_ID).select()
+            rates = db(db.rating.User_ID==get_ID).select()
+            thing = db.auth_user(id=get_ID)
+            voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
+        else:
+            session.flash = "sorry, we couldn't find what you were looking for :("
+            redirect(URL('index'))
+
     return locals()
 
 @auth.requires_login()
 def profile():
+    user_id = request.args(0)
+    profile_row = db(db.profile.User_ID==user_id).select()[0]
+    #exists_info = db(db.profile(db.profile.User_ID==user_id))
+    form=SQLFORM(db.profile, profile_row, showid=False)
+    if form.process().accepted:
+        session.flash="Profile Info Updated"
+        redirect(URL("my_profile"))
+    elif form.errors:
+        response.flash="Form has errors"
     
-    form = SQLFORM(db.profile).process()
+    return locals()
+
+@auth.requires_login()
+def edit_post():
+    post_id = request.args(0)
+    post_row = db(db.posts.id==post_id).select()[0]
+    form=SQLFORM(db.posts, post_row, showid=False)
+    if form.process().accepted:
+        session.flash="Post Info Updated"
+        redirect(URL("show",args=post_id))
+    elif form.errors:
+        response.flash="Form has errors"
     
+    return locals()
+
+
+def test_map():
+    location = request.args(0, cast=str)
     return locals()
 
 @auth.requires_membership('managers')
@@ -88,16 +142,17 @@ def manage():
     grid = SQLFORM.grid(db.posts)
     return locals()
 
+@auth.requires_login()
 def rating_callback():
     vars = request.post_vars
     voted = False
-    
+
     if vars:
         #make another table tracking who voted for who; then in the conditional check to see if the current user already has a vote logged for the user
         user = vars.user
         rate = (float (vars.rate))
         Rating = db(db.rating.User_ID==user).select()[0]
-        
+
         voter = db((db.votes.Rater==auth.user.id)&(db.votes.Ratee==user)).select()
         if voter:
             voter = voter[0]
@@ -107,17 +162,17 @@ def rating_callback():
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             voter.update_record(score = rate)
             response.flash="You changed your vote"
-            
+
         else:
-            
+
             Rating.update_record(Rcount=Rating.Rcount+ 1)
             Rating.update_record(score=Rating.score+rate)
             Rating.update_record(rating=((Rating.score)/Rating.Rcount))
             db.votes.insert(Rater=auth.user.id, Ratee=user, Vtype='profile', score=rate)
             response.flash="new vote"
-
+    return locals()
 def testCss():
-    
+
     return locals()
 
 def login():
@@ -145,6 +200,7 @@ def user():
     to decorate functions that need access control
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
+    auth.settings.register_onaccept.append(lambda form: db.profile.insert(User_ID=auth.user.id))
     return dict(form=auth())
 
 
@@ -166,12 +222,22 @@ def call():
     """
     return service()
 
+<<<<<<< HEAD
+=======
+def delete_post():
+    post_id = request.post_vars.post_id
+    query = db.posts.id==post_id
+    db(query).delete()
+    response.flash = "Post deleted"
+
+>>>>>>> refs/remotes/origin/E3
 def getItems(items):
     items = items.replace(" ", "")
     items = items.lower()
     items = items.split(",")
     return items
 
+<<<<<<< HEAD
 
 def item():
     curr_item = db.posts(request.args(0,cast=int))
@@ -188,4 +254,26 @@ def item():
             if curr_item.offers.lower().replace(" ", "") == item:
                 match.records.append(row)
     one_way_match.exclude(lambda row: row in match)
+=======
+#input_list == rows
+#intersts_list == all tokens of curr_item.intersts
+
+def checkMatch(input_list):
+    interst_list = getItems(input_list.interests)
+    match = db(db.posts.created_by != input_list.created_by)
+    match = db(db.posts.interests == input_list.offers )
+    '''for item in interst_list:
+        match =  db(db.posts.offers == item).select()'''
+    return match
+
+def item():
+    curr_item = db.posts(request.args(0,cast=int))
+    '''
+    rows = db(db.posts.created_by != curr_item.created_by).select()
+    rows = db(db.posts.interests == curr_item.offers ).select()
+    rows = db(db.posts.offers == curr_item.interests ).select()
+    '''
+    rows = checkMatch(curr_item).select()
+    incomplete_rows = rows
+>>>>>>> refs/remotes/origin/E3
     return locals()

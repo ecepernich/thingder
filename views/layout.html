@@ -26,6 +26,9 @@
     <link rel='stylesheet' type='text/css' href="{{=URL('static','css/style.css')}}">
     <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
     <!-- All JavaScript at the bottom, except for Modernizr which enables
          HTML5 elements & feature detects -->
     <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
@@ -72,6 +75,12 @@
             <button type="button" class="btn btn-default btn-lg">
     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Message </button>
                 </a>
+            <form class="navbar-form navbar-left" role="search" action="show_profile" method="post">
+      <div class="form-group">
+        <input id="search" type="text" class="form-control" placeholder="Search" name="search_filter">
+      </div>
+      <button type="submit" class="glyphicon glyphicon-search">
+    </form>
         </div>
       </div>
     </nav>
@@ -121,6 +130,9 @@
     <!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
     {{block page_js}}{{end page_js}}
     {{if response.google_analytics_id:}}
     <!-- Analytics ==================================== -->

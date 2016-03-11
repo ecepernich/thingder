@@ -1,21 +1,5 @@
 {{extend 'layout.html'}}
-<!--<h1>Sory by category</h1>
-{{=var1}}
-<table class="table">
-        {{for row in rows:}}
-        <tr>
-            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
-            <td>{{=row.created_by.first_name}}</td>
-            <td>{{=row.created_on}}</td>
-            <td>{{=row.interests}}</td>
-            <td>{{=row.offers}}</td>
-            <td><img width="100px"
-     src="{{=URL('download', args=row.image)}}" /></td>
-        </tr>
-        {{pass}}
-    </table>
--->
-<h2>Sorted by category: {{=var1}}</h2>
+<h2>Sorted by location: {{=var2}}</h2>
 <div class="container-fluid">
         <div class="row">
         {{for row in rows:}}
