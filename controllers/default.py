@@ -283,24 +283,19 @@ def getItems(items):
     items = items.split(",")
     return items
 
-#input_list == rows
-#intersts_list == all tokens of curr_item.intersts
-
-def checkMatch(input_list):
-    interst_list = getItems(input_list.interests)
-    match = db(db.posts.created_by != input_list.created_by)
-    match = db(db.posts.interests == input_list.offers )
-    '''for item in interst_list:
-        match =  db(db.posts.offers == item).select()'''
-    return match
-
 def item():
     curr_item = db.posts(request.args(0,cast=int))
-    '''
+    item_list = getItems(curr_item.interests)
     rows = db(db.posts.created_by != curr_item.created_by).select()
-    rows = db(db.posts.interests == curr_item.offers ).select()
-    rows = db(db.posts.offers == curr_item.interests ).select()
-    '''
-    rows = checkMatch(curr_item).select()
-    incomplete_rows = rows
+    one_way_match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "@empty@")
+    match = rows.find(lambda row: row.offers.lower().replace(" ", "") == "@empty@")
+    for item in item_list:
+         one_way_match = one_way_match & rows.find(lambda row: row.offers.lower().replace(" ", "") == item)
+
+    for row in one_way_match:
+        item_list = getItems(row.interests)
+        for item in item_list:
+            if curr_item.offers.lower().replace(" ", "") == item:
+                match.records.append(row)
+    one_way_match.exclude(lambda row: row in match)
     return locals()
