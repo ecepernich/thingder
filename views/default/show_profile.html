@@ -80,7 +80,7 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
         var id =jQuery(t).attr('data-id');
         jQuery.ajax({method:'post', url:'{{=URL('../rating_callback')}}',
                      data:{'rate':rating, 'user':id},
-                    success: function(data){} });
+                    success: function(data){}  });
     }
     $(document).ready(function() {
         $('#radioButtonContainerId input:radio').click(function() {

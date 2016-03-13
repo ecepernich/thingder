@@ -11,12 +11,25 @@
 from gluon.tools import prettydate
 
 def index():
+    nearby_posts=[]
+    if request.post_vars:
+        nearby_posts.append(request.post_vars.location)
     #pagination from web2py manual
     if len(request.args): page=int(request.args[0])
     else: page=0
     items_per_page=5
     limitby=(page*items_per_page,(page+1)*items_per_page+1)
     rows=db().select(db.posts.ALL,limitby=limitby)
+    user_location = 0
+    if auth.is_logged_in(): 
+        user = db(db.profile.User_ID==auth.user.id).select()
+        user = user[0]
+        user_location = user.zip_code
+        posts = db(db.posts).select()
+        l = []
+        nearby_posts=[]
+        
+    #response.flash=l[2]
     return locals()
     #rows = db(db.posts).select()
 
@@ -168,7 +181,7 @@ def edit_post():
     
     return locals()
 
-
+    
 def test_map():
     location = request.args(0, cast=str)
     return locals()

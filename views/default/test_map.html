@@ -19,6 +19,7 @@ var geocoder;
             map: map,
             position: results[0].geometry.location
         });
+          alert('longitude =' + results[0].geometry.location.lng())
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }

@@ -5,7 +5,7 @@
     <br>
     <h3>Item posts</h3>
 
-    <form action="showByCategory" method="post">
+    <form {{if not len(request.args): }}action="showByCategory" {{pass}} {{if len(request.args): }} action="../showByCategory"{{pass}} method="post">
         <select id="category_name" name='filter1'>
             <option disabled selected>Category</option>
             <option>Computers</option>
@@ -17,7 +17,7 @@
             <input id="category_button" style="margin: 10px; height: 40px" type="submit" value="filter" disabled>
         </select>
     </form>
-    <form action="showByLocations" method="post">
+    <form {{if not len(request.args): }}action="showByLocations" {{pass}} {{if len(request.args): }} action="../showByLocations"{{pass}} method="post">
         <select id="location_name" name='filter2'>
             <option disabled selected>Location</option>
             <option>Bakersfield</option>
@@ -89,7 +89,8 @@
                         {{if row.image:}}
                         <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
                         {{pass}}
-                        <h4><a href="{{=URL('test_map',args=row.locations)}}">Show on map</a></h4>
+                        <h4><a href={{if db(db.profile.User_ID == row.created_by).select():rows2=db(db.profile.User_ID == row.created_by).select()[0]}} {{if rows2.zip_code:}}"{{=URL('test_map',args=[row.locations,rows2.zip_code])}}"{{pass}} 
+                               {{if not rows2.zip_code:}}"{{=URL('test_map',args=row.locations)}}"{{pass}}>Show on map</a></h4>
                     </div>
         </div><br /></td>
     
@@ -143,4 +144,94 @@
       
     });
   });
+ 
+
+                      
 </script>
+<script>
+    function do_ajax_send(location){
+        jQuery.ajax({method:'post', url:'{{=URL('index')}}',
+                     data:{'location':location},
+                    success: function(data){alert('success')}  });
+    }
+    {{if auth.is_logged_in():}}
+var geocoder;
+  /*var map;*/
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 8,
+      center: latlng
+    }
+    
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var user_longitude;
+    var user_latitude;
+    var longitude;
+    var latitude;
+    var nearby;
+      user_zip = '{{=user_location}}'
+      
+      geocoder.geocode( { 'address': user_zip}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+          user_longitude = results[0].geometry.location.lng();
+          user_latitude = results[0].geometry.location.lat();
+          
+          alert(results[0].geometry.location + 'hi');
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+      
+    {{for x in range(1,5):}}
+     
+    /*var address = 'New York';*/
+    var address = '{{=db(db.posts.id==x).select()[0].locations}}'
+    
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+          /* instead of ajax just print a statement with the address thats close*/
+           longitude = results[0].geometry.location.lng();
+           latitude = results[0].geometry.location.lat();
+          /*add anchor tag to filter by location*/
+          if (Math.abs(longitude)-Math.abs(user_longitude) < 2 & Math.abs(latitude)-Math.abs(user_latitude)< 2){ $('#close_posts1').append('{{=db(db.posts.id==x).select()[0].locations}}'+ ', '); }
+          alert(results[0].geometry.location);
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+      {{pass}} {{pass}}
+      
+  }
+    
+
+</script>
+<body onload="initialize()">
+ <div id="map" style="display: none;"></div>
+    
+ <div id="close_posts" class="well" >
+     <h3>Nearby Listings</h3>
+     <h4 id="close_posts1">
+         
+     </h4>
+    </div>
+    
+</body>
+
+       
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8lo8mW7zn9oahWIJ4Eo4ig_gVI4g-aUA&callback=initMap"
+    async defer></script>
+  </body>
+</html>
