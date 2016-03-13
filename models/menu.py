@@ -1,20 +1,12 @@
-# -*- coding: utf-8 -mail = auth.settings.mailer
-mail.settings.server = "stmp.gmail.com:587"
-mail.settings.sender= "autoweb2py@gmail.com"
-mail.settings.login = "autoweb2py@gmail.com:waolokssqdipvbkp"
-
-auth.settings.registration_requires_verification = True
-
-def send_email(user, subject):
-    message = "Multi Line string for %string(first_name)s"# this file is released under public domain and you can use without limitations
+# -*- coding: utf-8 -*-
+# this file is released under public domain and you can use without limitations
 
 #########################################################################
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('Thingder'),XML('&trade;&nbsp;'),
-                  _class="navbar-brand",_href="/thingder/default/index",
-                  _id="web2py-logo")
+response.logo = A(IMG(_src=URL('static', 'images/thingderlogo.png'),
+                  _href=URL('default', 'index')))
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
@@ -48,26 +40,5 @@ DEVELOPMENT_MENU = True
 ## provide shortcuts for development. remove in production
 #########################################################################
 
-def _():
-    # shortcuts
-    app = request.application
-    ctr = request.controller
-    # useful links to internal and external resources
-    
-if DEVELOPMENT_MENU: _()
 
 if "auth" in locals(): auth.wikimenu()
-
-mail = auth.settings.mailer
-mail.settings.server = "smtp.gmail.com:587"
-mail.settings.sender= "autoweb2py@gmail.com"
-mail.settings.login = "autoweb2py@gmail.com:waolokssqdipvbkp"
-
-auth.settings.registration_requires_verification = True
-
-def send_email(user, subject):
-    message = " Multi line string for %string(first_name)s"
-    message = open("somefile.html", "r").read()
-    mail.send(to=user.email,
-              subject=subject,
-              message=message % user)
