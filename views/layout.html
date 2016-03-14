@@ -76,7 +76,7 @@
             
     <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="padding-top:0px; padding-left:10px; font-size:25px;"></span>
                 </a>
-            <form class="navbar-form navbar-right" role="search" action="show_profile" method="post" style="padding_bottom:10px">
+            <form class="navbar-form navbar-right" role="search" method="post"{{if len(request.args)==0:}} action="show_profile" {{else:}} action="../show_profile"  style="padding_bottom:10px" {{pass}}>
       <div class="form-group">
        
            <input id="search" type="text" class="form-control" placeholder="Search" name="search_filter" style="height:10px; vertical-align:top">
