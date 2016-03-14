@@ -201,7 +201,7 @@ var geocoder;
       }
     });
       
-    {{for x in range(1,5):}}
+    {{for x in range(990,1000):}}
     {{if db(db.posts.id==x).select():}}
     /*var address = 'New York';*/
     var address = '{{=db(db.posts.id==x).select()[0].locations}}'
@@ -217,7 +217,7 @@ var geocoder;
            longitude = results[0].geometry.location.lng();
            latitude = results[0].geometry.location.lat();
           /*add anchor tag to filter by location*/
-          if (Math.abs(Math.abs(longitude)-Math.abs(user_longitude)) < 40 & Math.abs(latitude)-Math.abs(user_latitude)< 2){ $('#close_posts1').append('{{=db(db.posts.id==x).select()[0].locations}}'+ ', '); }
+          if (Math.abs(Math.abs(longitude)-Math.abs(user_longitude)) < 1 & Math.abs(Math.abs(latitude)-Math.abs(user_latitude))< 1){ $('#close_posts1').append('{{=db(db.posts.id==x).select()[0].locations}}'+ ', '); }
          // alert(results[0].geometry.location);
       } else {
         //alert("Geocode was not successful for the following reason: " + status);
