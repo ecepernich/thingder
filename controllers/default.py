@@ -17,7 +17,7 @@ def index():
     #pagination from web2py manual
     if len(request.args): page=int(request.args[0])
     else: page=0
-    items_per_page=5
+    items_per_page=4
     limitby=(page*items_per_page,(page+1)*items_per_page+1)
     rows=db().select(db.posts.ALL,limitby=limitby)
     user_location = 0

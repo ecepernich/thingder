@@ -22,6 +22,7 @@
     <!-- include stylesheets -->
     <link rel="stylesheet" href="{{=URL('static','css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{=URL('static','css/web2py-bootstrap3.css')}}"/>
+    <link rel="stylesheet" href="{{=URL('static','css/cards.css')}}"/>
     <link rel="stylesheet" href="{{=URL('static','css/Custom.css')}}"/>
     <link rel='stylesheet' type='text/css' href="{{=URL('static','css/style.css')}}">
     <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
@@ -53,7 +54,7 @@
     <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
     <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
     <!-- Navbar ======================================= -->
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-xs navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -71,15 +72,16 @@
           {{if response.menu:}}
           {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}
           {{pass}}
-            <a href="messaging.html">
-            <button type="button" class="btn btn-default btn-lg">
-    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Message </button>
+           <a href="messaging.html">
+            
+    <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="padding-top:0px; padding-left:10px; font-size:25px;"></span>
                 </a>
-            <form class="navbar-form navbar-left" role="search" action="show_profile" method="post">
+            <form class="navbar-form navbar-right" role="search" method="post"{{if len(request.args)==0:}} action="show_profile" {{else:}} action="../show_profile"  style="padding_bottom:10px" {{pass}}>
       <div class="form-group">
-        <input id="search" type="text" class="form-control" placeholder="Search" name="search_filter">
+       
+           <input id="search" type="text" class="form-control" placeholder="Search" name="search_filter" style="height:10px; vertical-align:top">
       </div>
-      <button type="submit" class="glyphicon glyphicon-search">
+                  <button type="submit" class="glyphicon glyphicon-search" style="font-size:11px; line-height:5px; vertical-align:top; color:rgb(85,140,137)"> </button>
     </form>
         </div>
       </div>
@@ -115,18 +117,7 @@
       {{pass}}
 
     </div>
-
-    {{block footer}} <!-- this is default footer -->      
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="copyright pull-left">{{=T('Copyright')}} &#169; {{=request.now.year}}</div>
-          <div id="poweredBy" class="pull-right">
-            {{=T('Powered by')}}
-            <a href="http://www.web2py.com/">web2py</a>
-          </div>
-      </div>
-    </footer>
-    {{end}}
+        
     <!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>

@@ -1,11 +1,8 @@
-{{extend 'layout.html'}}
-<h1>
-    Your Item:
-</h1>
+<!--match page-->
 
-<h1>
-    {{=curr_item.created_by.first_name}}
-</h1>
+{{extend 'layout.html'}}
+<h1>Your Item: </h1>
+<h1>{{=curr_item.created_by.first_name}}</h1>
 <br>
 
 <table>
@@ -23,19 +20,16 @@
 
   </tr>
 </table>
-
 <br>
-<h1>
-    Trade Match
-</h1>
+
+<!--show amtches from default.py db calculation-->
+<h1>Trade Match</h1>
 
         {{for row in match:}}
                 <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" class="thumbnail" src="{{=URL('download', args=row.image)}}"/></a>
                 {{pass}}
 
-<h1>
-    Close Match Items
-</h1>
+<h1>Close Match Items</h1>
         {{for row in one_way_match:}}
                 <a href="{{=URL('show',args=row.id)}}"><img height="225" width="225" class="thumbnail" src="{{=URL('download', args=row.image)}}"/></a>
       {{pass}}
