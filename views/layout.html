@@ -72,7 +72,7 @@
           {{if response.menu:}}
           {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}
           {{pass}}
-           <a href="messaging.html">
+           <a {{if len(request.args)==0:}} href="messaging" {{elif len(request.args)==1:}} href="../messaging" {{elif len(request.args)==2:}} href="../../messaging" {{pass}}>
             
     <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="padding-top:6px; padding-left:10px; font-size:25px;"></span>
                 </a>
