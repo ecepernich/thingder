@@ -5,7 +5,11 @@
 }
 
 a:hover {
-    color:#ffffff
+    color:#ffffff;
+}
+
+.card-table > a:hover {
+    color: blue;
 }
 
 .navbar-custom {

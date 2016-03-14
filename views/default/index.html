@@ -67,7 +67,7 @@
         {{for i,row in enumerate(rows):}}
         {{if i==items_per_page: break}}
     
-        <td>
+        <td class="card-table">
             <a href="{{=URL('show',args=row.id)}}">
               <div class="thecard">
                 <div class="card-img">
