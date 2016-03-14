@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+<div style="float:left;margin:auto;width:30%;">
 <h1>{{=fname}} {{=lname}}</h1>
 <h1></h1>
 <a href="{{=URL('profile',args=auth.user.id)}}"><button>Edit Profile</button></a>
@@ -36,6 +37,7 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
 {{pass}}
             
         {{pass}}
+</div>
 <style>
 .table { 
 color: #333;
@@ -67,6 +69,7 @@ tr:nth-child(odd) td { background: #FEFEFE; }
 
 tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
 </style>
+<div style="float:left;margin:auto;width:70%">
 <h3>Recent Posts</h3>
  <table class="table">
         {{for row in rows:}}
@@ -85,7 +88,7 @@ tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
          </tr>
         {{pass}}
      </table>
-
+</div>
 <script>
     $(document).ready(function() {
         $("button").click(function() {

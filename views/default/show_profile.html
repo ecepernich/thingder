@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+<div style="float:left;width:30%"
 <h1>{{=thing.first_name}} {{=thing.last_name}}</h1>
 <h3></h3>
 <h3></h3>
@@ -19,13 +20,13 @@
 {{age=info.age}}
 {{zip=info.zip_code}}
 {{abtme=info.about_me}}
+
             <td>{{if age==None:}} {{else:}}Age: {{=info.age}}{{pass}}</td>
             <h3></h3>
             <td>{{if zip==None:}} {{else:}}Zip Code: {{=info.zip_code}}{{pass}}</td>
             <h3></h3>
             <td>{{if abtme==None:}} {{else:}}About {{=thing.first_name}}: {{=info.about_me}}{{pass}}</td>
-            <h3></h3>
-            
+            <h3></h3>       
         {{pass}}
 
 {{for rate in rates:}} 
@@ -70,7 +71,7 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
     {{pass}}
 
 
-
+</div>
 </body>
 </html>
 
@@ -101,7 +102,7 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
     });
 </script>
 
-
+<div style="float:left; width:70%; text-align:left;">
 <h3>Recent Posts</h3>
  <table class="table">
         {{for row in rows:}}
@@ -114,7 +115,10 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
             {{if row.image:}}
             <td><img width="100px"
      src="{{=URL('download', args=row.image)}}" /></td>
+            {{else:}}
+            <td><img width="100px" /></td>
         </tr>
         {{pass}}
         {{pass}}
      </table>
+</div>
