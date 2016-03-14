@@ -9,8 +9,8 @@
 
 <body>
     
-    <h1>{{=post.title}}</h1>
-    <i>Posted: {{=prettydate(post.created_on)}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></i>
+    <h2><b>{{=post.title}}</b></h2>
+    <i>Posted: {{=post.created_on.strftime("%m/%d/%Y")}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></i>
     <br>
         {{if post.image:}}
             <img vertical-align="" width="260px" height="260px" src="{{=URL('download', args=post.image)}}"/>
