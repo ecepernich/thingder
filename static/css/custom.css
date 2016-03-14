@@ -19,7 +19,7 @@
 }
 .navbar-xs { min-height:28px; height: 40px; }
 .navbar-xs .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 28px; }
-.navbar-xs .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 28px; }
+.navbar-xs .navbar-nav > li > a {  padding-top: 6px; padding-bottom: 6px; line-height: 28px; }
 .navbar-custom .navbar-nav > li > a {
   	color:#000;
   	padding-left:20px;
