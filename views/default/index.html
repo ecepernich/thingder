@@ -1,6 +1,6 @@
 {{extend 'layout.html'}}
-
 <html>
+
    <h2>Welcome to Thingder!</h2>
     <br>
     <h3>Item posts</h3>
@@ -89,19 +89,17 @@
                         {{if row.image:}}
                         <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
                         {{pass}}
-                        <h4><a href={{if db(db.profile.User_ID == row.created_by).select():rows2=db(db.profile.User_ID == row.created_by).select()[0]}} {{if rows2.zip_code:}}"{{=URL('test_map',args=[row.locations,rows2.zip_code])}}"{{pass}} 
+                        <h4><a href={{if db(db.profile.User_ID == row.created_by).select():rows2=db(db.profile.User_ID == row.created_by).select()[0]}} {{if rows2.zip_code:}}"{{=URL('test_map',args=[row.locations,rows2.zip_code])}}"{{pass}}
                                {{if not rows2.zip_code:}}"{{=URL('test_map',args=row.locations)}}"{{pass}}>Show on map</a></h4>
                     </div>
         </div><br /></td>
-    
+
 {{pass}}
     </table>
 {{if page:}}
 <a href="{{=URL(args=[page-1])}}">previous</a>
 {{pass}}
-{{if page and len(rows)>items_per_page:}}
 <b>|</b>
-{{pass}}
 {{if len(rows)>items_per_page:}}
 <a href="{{=URL(args=[page+1])}}">next</a>
 {{pass}}
@@ -119,7 +117,7 @@
                 input.removeAttribute("disabled");
             }
         });
-        
+
         $(f).click(function() {
             if (f.selectedIndex > 0) {
                 input2.removeAttribute("disabled");
@@ -135,7 +133,7 @@
     {{l.append(user.first_name)}}
     {{pass}}
       {{ for x in l:}}
-        {{if x == l[len(l)-1]:}} 
+        {{if x == l[len(l)-1]:}}
             "{{=x}}"
     {{else:}} "{{=x}}",
 {{pass}}
@@ -143,21 +141,21 @@
     ];
     $( "#search" ).autocomplete({
       source: availableTags
-      
+
     });
   });
- 
+
 </script>
 <body onload="initialize()">
  <div id="map" style="display: none;"></div>
-    
+
  <div id="close_posts" class="well" >
      <h3>Nearby Listings</h3>
      <h4 id="close_posts1">
-         
+
      </h4>
     </div>
-    
+
 </body>
 
 <script>
@@ -171,7 +169,7 @@ var geocoder;
       zoom: 8,
       center: latlng
     }
-    
+
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
     var user_longitude;
     var user_latitude;
@@ -179,7 +177,7 @@ var geocoder;
     var latitude;
     var nearby;
       user_zip = '{{=user_location}}'
-      
+
       geocoder.geocode( { 'address': user_zip}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         map.setCenter(results[0].geometry.location);
@@ -189,18 +187,18 @@ var geocoder;
         });
           user_longitude = results[0].geometry.location.lng();
           user_latitude = results[0].geometry.location.lat();
-          
+
           alert(results[0].geometry.location + 'hi');
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
     });
-      
+
     {{for x in range(1,5):}}
     {{if db(db.posts.id==x).select():}}
     /*var address = 'New York';*/
     var address = '{{=db(db.posts.id==x).select()[0].locations}}'
-    
+
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         map.setCenter(results[0].geometry.location);
@@ -213,13 +211,13 @@ var geocoder;
            latitude = results[0].geometry.location.lat();
           /*add anchor tag to filter by location*/
           if (Math.abs(Math.abs(longitude)-Math.abs(user_longitude)) < 40 & Math.abs(latitude)-Math.abs(user_latitude)< 2){ $('#close_posts1').append('{{=db(db.posts.id==x).select()[0].locations}}'+ ', '); }
-          alert(results[0].geometry.location);
+          //alert(results[0].geometry.location);
       } else {
-        alert("Geocode was not successful for the following reason: " + status);
+        //alert("Geocode was not successful for the following reason: " + status);
       }
     });
       {{pass}} {{pass}} {{pass}}
-      
+
   }
 </script>
  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8lo8mW7zn9oahWIJ4Eo4ig_gVI4g-aUA&callback=initMap"
