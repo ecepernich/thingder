@@ -24,10 +24,10 @@
     {{for user in recepients:}}
     {{l.append(user.first_name)}}
   {{pass}}
-      {{ for x in l:}}
-        {{if x == l[len(l)-1]:}} 
-            "{{=x}}"
-    {{else:}} "{{=x}}",
+      {{ for x in range(0,len(l)):}}
+        {{if x == (len(l)-1):}} 
+            "{{=l[x]}}"
+    {{else:}} "{{=l[x]}}",
 {{pass}}
     {{pass}}
     ];

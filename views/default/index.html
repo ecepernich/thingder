@@ -190,7 +190,7 @@ var geocoder;
     });
       
     {{for x in range(1,5):}}
-     
+    {{if db(db.posts.id==x).select():}}
     /*var address = 'New York';*/
     var address = '{{=db(db.posts.id==x).select()[0].locations}}'
     
@@ -211,7 +211,7 @@ var geocoder;
         alert("Geocode was not successful for the following reason: " + status);
       }
     });
-      {{pass}} {{pass}}
+      {{pass}} {{pass}} {{pass}}
       
   }
     
