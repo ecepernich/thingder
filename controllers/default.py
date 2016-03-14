@@ -114,6 +114,11 @@ def messaging():
     rows = db(db.messages.recepient==auth.user.first_name).select(orderby=~db.messages.created_on)
     form3 = SQLFORM(db.messages).process()
     if form3.accepted:
+        name=form3.vars.recepient
+        recepient = db(db.auth_user.first_name==name).select()[0]
+        mail.send(to=recepient.email,
+                  subject='Thingder',
+                  message = '<html>You got a message! <br> From: ' + auth.user.first_name +'<br> Body: '+ form3.vars.body+ '<br><br><br>----------------------------------------------------<br> Do not reply. This is an automated email notification from ThingderTM</html>')
         redirect('messaging')
 
     return locals()

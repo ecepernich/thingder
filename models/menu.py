@@ -42,3 +42,8 @@ DEVELOPMENT_MENU = True
 
 
 if "auth" in locals(): auth.wikimenu()
+
+mail = auth.settings.mailer
+mail.settings.server = "smtp.gmail.com:587"
+mail.settings.sender = "autoweb2py@gmail.com"
+mail.settings.login = "autoweb2py@gmail.com:waolokssqdipvbkp"
