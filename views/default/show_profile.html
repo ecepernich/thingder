@@ -40,7 +40,7 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
     
     <br><br> <br>
     <form action='../rating_callback' method="post">
-        <div id="radioButtonContainerId">
+        <div class="rating_container well" id="radioButtonContainerId">
     <fieldset class="rating">     
         <tr data-id="{{=get_ID}}">
         <input data-id="{{=get_ID}}" type="radio" name="stars" id="4_stars" value="4" >

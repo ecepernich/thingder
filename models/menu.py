@@ -5,8 +5,8 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(IMG(_src=URL('static', 'images/thingderlogo.png'),
-                  _href=URL('default', 'index')))
+response.logo = A(IMG(_src=URL('static', 'images/thingderlogo.png')),
+                  _href=URL('default', 'index'))
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 

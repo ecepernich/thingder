@@ -12,6 +12,10 @@ a:hover {
     color: blue;
 }
 
+div.rating_container {
+    width: 420px;
+}
+
 .navbar-custom {
 	background-color:rgb(85,140,137);
     color:#000000;
