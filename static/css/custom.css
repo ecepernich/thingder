@@ -39,8 +39,8 @@ div.rating_container {
 }
 
 .navbar-xs .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    background-color: #001433;
-    color: #002966;
+    background-color: #ddd;
+    color: #000000;
 }
 
 .navbar-custom .navbar-nav > li > a {
