@@ -4,6 +4,10 @@
     font-weight: 100;
 }
 
+a:hover {
+    color:#ffffff
+}
+
 .navbar-custom {
 	background-color:rgb(85,140,137);
     color:#000000;
