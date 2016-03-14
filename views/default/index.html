@@ -192,9 +192,9 @@ var geocoder;
           user_longitude = results[0].geometry.location.lng();
           user_latitude = results[0].geometry.location.lat();
           
-          alert(results[0].geometry.location + 'hi');
+          //alert(results[0].geometry.location + 'hi');
       } else {
-        alert("Geocode was not successful for the following reason: " + status);
+        //alert("Geocode was not successful for the following reason: " + status);
       }
     });
       
@@ -215,9 +215,9 @@ var geocoder;
            latitude = results[0].geometry.location.lat();
           /*add anchor tag to filter by location*/
           if (Math.abs(Math.abs(longitude)-Math.abs(user_longitude)) < 40 & Math.abs(latitude)-Math.abs(user_latitude)< 2){ $('#close_posts1').append('{{=db(db.posts.id==x).select()[0].locations}}'+ ', '); }
-          alert(results[0].geometry.location);
+         // alert(results[0].geometry.location);
       } else {
-        alert("Geocode was not successful for the following reason: " + status);
+        //alert("Geocode was not successful for the following reason: " + status);
       }
     });
       {{pass}} {{pass}} {{pass}}
