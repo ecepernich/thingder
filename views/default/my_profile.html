@@ -43,7 +43,7 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
  <table class="table">
         {{for row in rows:}}
         <tr id={{row.id}}>
-            <td><a href="{{=URL('item',args=row.id)}}">{{=row.title}}</a></td>
+            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
             <td>{{=row.created_on}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
@@ -53,7 +53,7 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
             {{else:}}
             <td><img width="100px" alt=""></td>
             {{pass}}
-             <td><a href="{{=URL('edit_post',args=row.id)}}"><button style="width:100px;">Edit Post</button></a>   <button post_id="{{=row.id}}" style="width:100px;" class="btn btn-danger delete_post">Delete Post</button> </td>
+             <td><a href="{{=URL('item',args=row.id)}}"><button style="width:110px;" class="btn btn-primary" >View Matches</button></a> <a href="{{=URL('edit_post',args=row.id)}}"><button style="width:100px;">Edit Post</button></a>   <button post_id="{{=row.id}}" style="width:100px;" class="btn btn-danger delete_post">Delete Post</button> </td>
          </tr>
         {{pass}}
      </table>
