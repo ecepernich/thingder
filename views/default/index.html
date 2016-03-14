@@ -89,8 +89,7 @@
                         {{if row.image:}}
                         <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
                         {{pass}}
-                        <h4><a href={{if db(db.profile.User_ID == row.created_by).select():rows2=db(db.profile.User_ID == row.created_by).select()[0]}} {{if rows2.zip_code:}}"{{=URL('test_map',args=[row.locations,rows2.zip_code])}}"{{pass}} 
-                               {{if not rows2.zip_code:}}"{{=URL('test_map',args=row.locations)}}"{{pass}}>Show on map</a></h4>
+                        <h4><a href="{{=URL('test_map',args=row.locations)}}">Show on map</a></h4>
                     </div>
         </div><br /></td>
     
