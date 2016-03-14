@@ -1,3 +1,5 @@
+<!--index listings page -->
+
 {{extend 'layout.html'}}
 
 <html>
@@ -5,6 +7,7 @@
     <br>
     <h3>Item posts</h3>
 
+<!--category search bar-->
     <form {{if not len(request.args): }}action="showByCategory" {{pass}} {{if len(request.args): }} action="../showByCategory"{{pass}} method="post">
         <select id="category_name" name='filter1'>
             <option disabled selected>Category</option>
@@ -17,6 +20,7 @@
             <input id="category_button" style="margin: 10px; height: 40px" type="submit" value="filter" disabled>
         </select>
     </form>
+    <!--location search bar-->
     <form {{if not len(request.args): }}action="showByLocations" {{pass}} {{if len(request.args): }} action="../showByLocations"{{pass}} method="post">
         <select id="location_name" name='filter2'>
             <option disabled selected>Location</option>
@@ -42,25 +46,8 @@
             <input id="location_button" style="margin: 10px; height: 40px" type="submit" value="Location" disabled>
         </select>
     </form>
-
-   <!-- <div class="container-fluid">
-        <div class="row">
-        {{for row in rows:}}
-                <div class="col-md-3">
-                    <div id="card">
-                        <h3><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></h3>
-                        <p>Created by: <a href="{{=URL('show_profile',args=row.created_by.id)}}">{{=row.created_by.first_name}}</a></p>
-                        <p>Created on: {{=row.created_on}}</p>
-                        <p>Interested in: {{=row.interests}}</p>
-                        <p>Offering: {{=row.offers}}</p>
-                        {{if row.image:}}
-                        <img vertical-align="" width="190px" src="{{=URL('download', args=row.image)}}"/>
-                        {{pass}}
-                    </div>
-                </div>
-        {{pass}}
-        </div>
-    </div> -->
+    
+<!--show posts - pagination allows for 5 posts per page-->
     <table class="table">
     {{for i,row in enumerate(rows):}}
 {{if i==items_per_page: break}}
@@ -96,6 +83,8 @@
     
 {{pass}}
     </table>
+   
+<!--show prev/next pages based on pagination - variable depending on # of posts -->
 {{if page:}}
 <a href="{{=URL(args=[page-1])}}">previous</a>
 {{pass}}
@@ -160,6 +149,7 @@
     
 </body>
 
+<!--map script to show nearby locations - adn-->
 <script>
     {{if auth.is_logged_in():}}
 var geocoder;
