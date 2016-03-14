@@ -1,5 +1,5 @@
 <!--index listings page -->
-
+{{from gluon.tools import prettydate}}
 {{extend 'layout.html'}}
 <table>
     <tr>
@@ -52,15 +52,6 @@
     
     </table>
             
-{{if page:}}
-<a href="{{=URL(args=[page-1])}}">previous</a>
-{{pass}}
-{{if page and len(rows)>items_per_page:}}
-<b>|</b>
-{{pass}}
-{{if len(rows)>items_per_page:}}
-<a href="{{=URL(args=[page+1])}}">next</a>
-{{pass}}    
     
     <table>
     <tr>
@@ -76,7 +67,7 @@
                   {{pass}}
                 </div>
                 <div class="card-caption">
-                  <span class="date">{{=row.created_on}}</span>
+                  <span class="date">{{=prettydate(row.created_on)}}</span>
                     {{if len(row.title) > 25:}}
                         <h1>{{=row.title[:23] + "..."}}</h1>
                         {{else:}}
@@ -106,6 +97,18 @@
         {{pass}}
         </tr>
     </table>
+
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">previous</a>
+{{pass}}
+{{if page and len(rows)>items_per_page:}}
+<b>|</b>
+{{pass}}
+{{if len(rows)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">next</a>
+{{pass}}    
+
+
 </html>
 <script>
     // Input box is initially disabled if a category is not specified. When a category is chosen, remove the disabled property from input
