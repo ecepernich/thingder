@@ -55,7 +55,9 @@
 {{if page:}}
 <a href="{{=URL(args=[page-1])}}">previous</a>
 {{pass}}
+{{if page and len(rows)>items_per_page:}}
 <b>|</b>
+{{pass}}
 {{if len(rows)>items_per_page:}}
 <a href="{{=URL(args=[page+1])}}">next</a>
 {{pass}}    
