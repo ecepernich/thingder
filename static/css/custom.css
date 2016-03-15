@@ -86,6 +86,19 @@ body .ui-autocomplete .ui-menu-item .ui-corner-all {
 body .ui-autocomplete .ui-menu-item .ui-state-focus {
    
 }
+
 .table {
     background: rgb(116,150,150)
+}
+
+.col-30 {
+    margin: auto;
+    width: 30%;
+    float: left;
+}
+
+.col-70 {
+    margin: auto;
+    width: 70%;
+    float: left;
 }

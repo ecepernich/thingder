@@ -1,5 +1,9 @@
+{{from gluon.tools import prettydate}}
 {{extend 'layout.html'}}
-<div style="float:left;width:30%"
+<link rel="stylesheet" href="{{=URL('static','css/my_profileStyle.css')}}"/>
+
+
+<div class="col-30">
 <h1>{{=thing.first_name}} {{=thing.last_name}}</h1>
 <h3></h3>
 <h3></h3>
@@ -61,17 +65,13 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
         </tr>
     
     </form>
-</body>
-</html>
-<br>
-<form enctype="multipart/form-data" action="{{=URL('messaging',args=get_ID)}}">
-    <input type="submit" value="message {{=thing.first_name}}"/>
+    <br>
+    <form enctype="multipart/form-data" action="{{=URL('messaging',args=get_ID)}}">
+        <input type="submit" value="message {{=thing.first_name}}"/>
     
-</form>
+    </form>
     {{pass}}
-
-
-</div>
+    </div>
 </body>
 </html>
 
@@ -102,21 +102,29 @@ User Rating: {{if userrating==0.0:}}This user has no ratings yet. Go rate them!{
     });
 </script>
 
-<div style="float:left; width:70%; text-align:left;">
-<h3>Recent Posts</h3>
- <table class="table">
+<div class="col-70">
+    <h3>Recent Posts</h3>
+    <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Date Posted</th>
+            <th>Interests</th>
+            <th>Offers</th>
+            
         {{for row in rows:}}
         <tr>
-            <td><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></td>
-            <td>{{=row.created_on}}</td>
+            <td>
+                <p><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></p>
+                {{if row.image:}}
+                    <img width="100px" src="{{=URL('download', args=row.image)}}" />
+                {{else:}}
+                    <img width="100px" alt="">
+                {{pass}}
+            <td>{{=prettydate(row.created_on)}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
 
             {{if row.image:}}
-            <td><img width="100px"
-     src="{{=URL('download', args=row.image)}}" /></td>
-            {{else:}}
-            <td><img width="100px" /></td>
         </tr>
         {{pass}}
         {{pass}}

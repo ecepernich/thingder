@@ -1,16 +1,15 @@
 {{from gluon.tools import prettydate}}
 {{extend 'layout.html'}}
-<h1>{{=fname}} {{=lname}}</h1>
-<h1></h1>
-<a href="{{=URL('profile',args=auth.user.id)}}"><button>Edit Profile</button></a>
-<h1></h1>
-{{for info in infos:}}
-{{if info.image:}}
+<link rel="stylesheet" href="{{=URL('static','css/my_profileStyle.css')}}"/>
+<div class="col-30">
+    <h1>{{=fname}} {{=lname}}</h1>
+    {{for info in infos:}}
+    {{if info.image:}}
         <tr>
             <td><img width="200px" height="200px"
      src="{{=URL('download', args=info.image)}}" /></td>
         </tr>
-{{else:}}
+    {{else:}}
         <tr>
             <td><img width="200px" height="200px"
      src="{{=URL('static', 'images/defaultprofile.png')}}" /></td>
@@ -18,9 +17,9 @@
         {{pass}}
 
             <h3></h3>
-{{age=info.age}}
-{{zip=info.zip_code}}
-{{abtme=info.about_me}}
+    {{age=info.age}}
+    {{zip=info.zip_code}}
+    {{abtme=info.about_me}}
             <td>Your Age: {{if not age:}} You haven't entered your age yet. {{else:}}{{=info.age}}{{pass}}</td>
             <h3></h3>
             <td>Your Zip Code: {{if not zip:}}You haven't entered your zipcode yet.{{else:}}{{=info.zip_code}}{{pass}}</td>
@@ -36,7 +35,14 @@
 User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rating}}{{pass}}
 {{pass}}
 {{pass}}
-<link rel="stylesheet" href="{{=URL('static','css/my_profileStyle.css')}}"/>
+<br>
+<br>
+<a href="{{=URL('profile',args=auth.user.id)}}"><button>Edit Profile</button></a>
+    
+</div>
+
+
+<div class="col-70">
 <h3>Recent Posts</h3>
  <table class="table">
      <tr>
@@ -72,10 +78,11 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
 
-             <td><a href="{{=URL('item',args=row.id)}}"><button style="width:110px;" class="btn btn-primary" >View Matches</button></a> <a href="{{=URL('edit_post',args=row.id)}}"><button style="width:100px;">Edit Post</button></a>   <button post_id="{{=row.id}}" style="width:100px;" class="btn btn-danger delete_post">Delete Post</button> </td>
+             <td><a href="{{=URL('item',args=row.id)}}"><button style="width:110px; margin-top: 22px;" class="btn btn-primary" >View Matches</button></a> <a href="{{=URL('edit_post',args=row.id)}}"><button style="width:110px; margin-top: 22px;">Edit Post</button></a>   <button post_id="{{=row.id}}" style="width:110px; margin-top: 22px;" class="btn btn-danger delete_post">Delete Post</button> </td>
          </tr>
         {{pass}}
      </table>
+</div>
 
 <script>
     $(document).ready(function() {
