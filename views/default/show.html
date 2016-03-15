@@ -23,6 +23,7 @@
     </ul>
     {{if post.created_by == auth.user_id:}}
     <a href="{{=URL('edit_post',args=post.id)}}"><button>Edit Post</button></a>
+    <a href="{{=URL('../test_map',args=[post.locations,post.created_by])}}">See on map</a>
     {{pass}}
 
     
@@ -60,6 +61,8 @@
     <input type="submit" value="message {{=post.created_by.first_name}}"/>
     
 </form>
+
+   
     {{pass}}
 
 

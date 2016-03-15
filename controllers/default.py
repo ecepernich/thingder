@@ -194,6 +194,9 @@ def edit_post():
     
 def test_map():
     location = request.args(0, cast=str)
+    if len(request.args)==2: 
+        user = db(db.profile.User_ID==request.args(1)).select()[0]
+        user_zip = user.zip_code
     return locals()
 
 @auth.requires_membership('managers')
