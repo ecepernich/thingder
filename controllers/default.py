@@ -83,6 +83,14 @@ def showByCategory():
             #l.append(rows[x])
             
     #append to list
+    user_location = 0
+    if auth.is_logged_in(): 
+        user = db(db.profile.User_ID==auth.user.id).select()
+        user = user[0]
+        user_location = user.zip_code
+        posts = db(db.posts).select()
+        l = []
+        nearby_posts=[]
     return locals()
 
 def showByLocations():
@@ -107,6 +115,14 @@ def showByLocations():
             #l.append(rows[x])
             
     #append to list
+    user_location = 0
+    if auth.is_logged_in(): 
+        user = db(db.profile.User_ID==auth.user.id).select()
+        user = user[0]
+        user_location = user.zip_code
+        posts = db(db.posts).select()
+        l = []
+        nearby_posts=[]
     return locals()
 
 @auth.requires_login()
