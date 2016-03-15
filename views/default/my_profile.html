@@ -27,11 +27,11 @@
             <h3></h3>
             <td>About You: {{if not abtme:}}You haven't entered your about me yet.{{else:}}{{=info.about_me}}{{pass}}</td>
             <h3></h3>
-            
+
         {{pass}}
 
 
-{{for rate in rates:}} 
+{{for rate in rates:}}
 {{userrating=rate.rating}}
 User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rating}}{{pass}}
 {{pass}}
@@ -60,8 +60,8 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
         <tr id={{row.id}}>
             <td>
                 <p><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></p>
-                
-                
+
+
                 {{if row.image:}}
             <img width="100px"
      src="{{=URL('download', args=row.image)}}" />
@@ -71,7 +71,7 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
             <td>{{=prettydate(row.created_on)}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
-            
+
              <td><a href="{{=URL('item',args=row.id)}}"><button style="width:110px;" class="btn btn-primary" >View Matches</button></a> <a href="{{=URL('edit_post',args=row.id)}}"><button style="width:100px;">Edit Post</button></a>   <button post_id="{{=row.id}}" style="width:100px;" class="btn btn-danger delete_post">Delete Post</button> </td>
          </tr>
         {{pass}}
@@ -91,5 +91,5 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
                     }
                 });
             });
-        });                
+        });
 </script>

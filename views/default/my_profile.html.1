@@ -1,3 +1,4 @@
+{{from gluon.tools import prettydate}}
 {{extend 'layout.html'}}
 <h1>{{=fname}} {{=lname}}</h1>
 <h1></h1>
@@ -34,27 +35,44 @@
 {{userrating=rate.rating}}
 User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rating}}{{pass}}
 {{pass}}
-            
-        {{pass}}
-
-<h1></h1>
-<h1></h1>
+{{pass}}
+<link rel="stylesheet" href="{{=URL('static','css/my_profileStyle.css')}}"/>
 <h3>Recent Posts</h3>
  <table class="table">
+     <tr>
+     <th>
+         Title
+     </th>
+     <th>
+         Date Posted
+     </th>
+         <th>
+         Interests
+     </th>
+         <th>
+         Offers
+     </th>
+         <th>
+         Manage
+     </th>
+         </tr>
         {{for row in rows:}}
-
-        <tr>
-            <td><a href="{{=URL('item',args=row.id)}}">{{=row.title}}</a></td>
         <tr id={{row.id}}>
-            <td><a href="{{=URL('item',args=row.id)}}">{{=row.title}}</a></td>
-            <td>{{=row.created_on}}</td>
+            <td>
+                <p><a href="{{=URL('show',args=row.id)}}">{{=row.title}}</a></p>
+                
+                
+                {{if row.image:}}
+            <img width="100px"
+     src="{{=URL('download', args=row.image)}}" />
+            {{else:}}
+            <img width="100px" alt="">
+            {{pass}}
+            <td>{{=prettydate(row.created_on)}}</td>
             <td>{{=row.interests}}</td>
             <td>{{=row.offers}}</td>
-            {{if row.image:}}
-            <td><img width="100px"
-     src="{{=URL('download', args=row.image)}}" /></td>
-            {{pass}}
-             <td><a href="{{=URL('edit_post',args=row.id)}}"><button>Edit Post</button></a>   <button post_id="{{=row.id}}" class="btn btn-danger delete_post">Delete Post</button> </td>
+            
+             <td><a href="{{=URL('item',args=row.id)}}"><button style="width:110px;" class="btn btn-primary" >View Matches</button></a> <a href="{{=URL('edit_post',args=row.id)}}"><button style="width:100px;">Edit Post</button></a>   <button post_id="{{=row.id}}" style="width:100px;" class="btn btn-danger delete_post">Delete Post</button> </td>
          </tr>
         {{pass}}
      </table>

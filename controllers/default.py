@@ -112,6 +112,7 @@ def showByLocations():
 @auth.requires_login()
 def messaging():
     rows = db(db.messages.recepient==auth.user.first_name).select(orderby=~db.messages.created_on)
+    rows = rows & db(db.messages.recepient==(auth.user.first_name).lower()).select(orderby=~db.messages.created_on)
     form3 = SQLFORM(db.messages).process()
     
     if form3.accepted:

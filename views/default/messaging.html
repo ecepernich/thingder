@@ -1,13 +1,15 @@
 {{extend 'layout.html'}}
+{{from gluon.tools import prettydate}}
 <h1>Send and receive messages</h1>
 {{=form3}}
+
 <table class="table"><h3>
     My Messages
     </h3>
         {{for row in rows:}}
         <tr>
-            <td>From: {{=row.created_by.first_name}}</td>
-            <td>{{=row.created_on}}</td>
+            <td>From: <a href="{{=URL('show_profile',args=row.created_by)}}">{{=row.created_by.first_name}}</a></td>
+            <td>{{=prettydate(row.created_on)}}</td>
             <td>{{=row.body}}</td>
             
             
