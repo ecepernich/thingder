@@ -10,12 +10,16 @@
 
 <body>
     
+    <div class="row">
+    <div class="col-md-6">
     <div class="pic-panel">
         {{if post.image:}}
             <img class="img-responsive" src="{{=URL('download', args=post.image)}}"/>
         {{pass}}
     </div>
+    </div>
     
+    <div class="col-md-6">
     <div class="info-panel">
         <h2>{{=post.title}}</h2>
         <i>Posted: {{=post.created_on.strftime("%m/%d/%Y")}} by <a href="{{=URL('show_profile',args=post.created_by.id)}}">{{=post.created_by.first_name}}</a></i>
@@ -33,8 +37,13 @@
         {{pass}}
 
     </div>
+    </div>
+    </div>
+    
+    <div class="row">
+    <div class="col-md-6">
     {{if auth.user:}}
-    <div class="clear rating-container">
+        <div class="rating-container">
         <!-- add conditional python to control which star is checked; pull rating from database -->
         <h3>{{if voter:}} vote again {{else:}} rate this user {{pass}}</h3>
     
@@ -60,6 +69,8 @@
             </div>
             </form>
         </div>
+    </div>
+    </div>
     </div>
 </body>
 </html>
