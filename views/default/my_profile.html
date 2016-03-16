@@ -87,16 +87,19 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
 <script>
     $(document).ready(function() {
         $("button").click(function() {
+            var result = confirm("Are you sure you want to delete this post?")
             row = $(this);
             val = $(this).attr("post_id");
-            $.ajax({
-                method: "POST",
-                url:'{{=URL('../delete_post')}}',
-                data: {'post_id': val},
-                success: function(data){
-                    row.closest("tr").remove();
+            if (result) {
+                $.ajax({
+                    method: "POST",
+                    url:'{{=URL('../delete_post')}}',
+                    data: {'post_id': val},
+                    success: function(data){
+                        row.closest("tr").remove();
                     }
                 });
-            });
+            }
         });
+    });
 </script>
