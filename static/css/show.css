@@ -19,7 +19,7 @@
 
 .info-panel {
     width: 40%;
-    float: left;
+    float: right;
     background-color: #f8f5f0;
     border-radius: 4px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
