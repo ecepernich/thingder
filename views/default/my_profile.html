@@ -44,7 +44,7 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
 
 <div class="col-70">
 <h3>Recent Posts</h3>
- <table class="table">
+ <table class="table posts-table">
      <tr>
      <th>
          Title
@@ -69,10 +69,10 @@ User Rating: {{if userrating==0.0:}}You have no ratings yet.{{else:}}{{=rate.rat
 
 
                 {{if row.image:}}
-            <img width="100px"
+            <img height="88px"
      src="{{=URL('download', args=row.image)}}" />
             {{else:}}
-            <img width="100px" alt="">
+            <img height="88px" alt="">
             {{pass}}
             <td>{{=prettydate(row.created_on)}}</td>
             <td>{{=row.interests}}</td>

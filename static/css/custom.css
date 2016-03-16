@@ -11,6 +11,13 @@ a:hover {
 .card-table > a:hover {
     color: blue;
 }
+.posts-table {
+    box-shadow: 0px 10px 10px rgba(0,0,0,.4);
+     transition: 400ms ease;
+}
+.posts-table:hover {
+    box-shadow: 0px 10px 25px rgba(0,0,0,.6);
+}
 
 div.rating_container {
     width: 420px;
