@@ -1,4 +1,3 @@
-<h1>This is the default/test_map.html template</h1>
 {{extend 'layout.html'}}
 <script>
 var geocoder;
@@ -29,7 +28,7 @@ var geocoder;
     infowindow.open(map, marker);
   });
         
-          alert('longitude =' + results[0].geometry.location.lng())
+          //alert('longitude =' + results[0].geometry.location.lng())
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }

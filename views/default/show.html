@@ -33,8 +33,9 @@
         </ul>
         {{if post.created_by == auth.user_id:}}
         <a href="{{=URL('edit_post',args=post.id)}}"><button><span class="glyphicon glyphicon-pencil"></span>  Edit Post</button></a>
+         {{pass}}
         <a href="{{=URL('../test_map',args=[post.locations,post.created_by])}}"><button><span class="glyphicon glyphicon-map-marker"></span>  See on map</button></a>
-        {{pass}}
+        
 
     </div>
     </div>
