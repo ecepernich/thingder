@@ -53,13 +53,14 @@
     </table>
             
     
-    <!--<table>-->
-    <!--<tr>-->
-    <div class="row">
+    <table>
+    <tr>
+    <!--<div class="row">-->
         {{for i,row in enumerate(rows):}}
         {{if i==items_per_page: break}}
     
-        <div class="card-table col-md-15">
+        <!--<div class="card-table col-md-15">-->
+        <td class="card-table">
             <a href="{{=URL('show',args=row.id)}}">
               <div class="thecard">
                 <div class="card-img">
@@ -92,12 +93,13 @@
                 </div>
               </div>
             </a>
-        </div>
-        
+        <!--</div>-->
+        </td>
         {{pass}}
         {{pass}}
-        </div>
-    <!--</table>-->
+        <!--</div>-->
+        </tr>
+    </table>
 
 {{if page:}}
 <a href="{{=URL(args=[page-1])}}">previous</a>
