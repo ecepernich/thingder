@@ -55,7 +55,7 @@ span + input[type=radio] + label, legend + input[type=radio] + label {
 }
  
 .rating label.stars {
-    background: transparent url('img/star_off.png') no-repeat center center;
+    background: transparent url('img/star_off.png') no-repeat;
 }
  
 .rating label.stars:hover ~ label.stars, 
