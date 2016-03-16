@@ -19,7 +19,7 @@ def index():
     else: page=0
     items_per_page=5
     limitby=(page*items_per_page,(page+1)*items_per_page+1)
-    rows=db().select(db.posts.ALL,limitby=limitby)
+    rows=db().select(db.posts.ALL,limitby=limitby, orderby=~db.posts.created_on)
     user_location = 0
     if auth.is_logged_in(): 
         user = db(db.profile.User_ID==auth.user.id).select()
@@ -71,7 +71,7 @@ def showByCategory():
     items_per_page=5
     lowerlimit=page*items_per_page
     upperlimit=(page+1)*items_per_page+1
-    rows=db(db.posts.category==var1).select()
+    rows=db(db.posts.category==var1).select(orderby=~db.posts.created_on)
     l = []
     size = len(rows)
     for x in range(lowerlimit, upperlimit):
@@ -103,7 +103,7 @@ def showByLocations():
     items_per_page=5
     lowerlimit=page*items_per_page
     upperlimit=(page+1)*items_per_page+1
-    rows=db(db.posts.locations==var2).select()
+    rows=db(db.posts.locations==var2).select(orderby=~db.posts.created_on)
     l = []
     size = len(rows)
     for x in range(lowerlimit, upperlimit):
@@ -149,7 +149,7 @@ def my_profile():
     fname = auth.user.first_name
     lname = auth.user.last_name
     infos = db(db.profile.User_ID==auth.user.id).select()
-    rows = db(db.posts.User_ID==auth.user.id).select()
+    rows = db(db.posts.User_ID==auth.user.id).select(orderby=~db.posts.created_on)
     rates = db(db.rating.User_ID==auth.user.id).select()
 
     return locals()
@@ -159,7 +159,7 @@ def show_profile():
     if request.args:
         get_ID = request.args[0]
         infos = db(db.profile.User_ID==get_ID).select()
-        rows = db(db.posts.User_ID==get_ID).select()
+        rows = db(db.posts.User_ID==get_ID).select(orderby=~db.posts.created_on)
         rates = db(db.rating.User_ID==get_ID).select()
         thing = db.auth_user(id=get_ID)
         voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
@@ -170,7 +170,7 @@ def show_profile():
             person = person[0]
             get_ID = person.id
             infos = db(db.profile.User_ID==get_ID).select()
-            rows = db(db.posts.User_ID==get_ID).select()
+            rows = db(db.posts.User_ID==get_ID).select(orderby=~db.posts.created_on)
             rates = db(db.rating.User_ID==get_ID).select()
             thing = db.auth_user(id=get_ID)
             voter = db((db.votes.Rater==auth.user)&(db.votes.Ratee==get_ID)).select()
