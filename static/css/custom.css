@@ -4,6 +4,10 @@
     font-weight: 100;
 }
 
+.clear {
+    clear: both;
+}
+
 a:hover {
     color:#ffffff;
 }
@@ -19,9 +23,6 @@ a:hover {
     box-shadow: 0px 10px 25px rgba(0,0,0,.6);
 }
 
-div.rating_container {
-    width: 420px;
-}
 
 .navbar-custom {
 	background-color:rgb(85,140,137);
