@@ -71,7 +71,7 @@ def showByCategory():
     items_per_page=5
     lowerlimit=page*items_per_page
     upperlimit=(page+1)*items_per_page+1
-    rows=db(db.posts.category==var1).select(orderby=~db.posts.created_on)
+    rows=db(db.posts.category==var1).select()
     l = []
     size = len(rows)
     for x in range(lowerlimit, upperlimit):
@@ -89,7 +89,7 @@ def showByCategory():
         user = user[0]
         user_location = user.zip_code
         posts = db(db.posts).select()
-        l = []
+        #l = []
         nearby_posts=[]
     return locals()
 
@@ -121,7 +121,7 @@ def showByLocations():
         user = user[0]
         user_location = user.zip_code
         posts = db(db.posts).select()
-        l = []
+        #l = []
         nearby_posts=[]
     return locals()
 

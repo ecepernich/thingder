@@ -32,8 +32,6 @@
 }
 
 .rating-container {
-    max-width: 650px;
-    width: 40%;
     min-height: 100px;
     background-color: #f8f5f0;
     border-radius: 4px;
